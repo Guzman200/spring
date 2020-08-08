@@ -1,8 +1,12 @@
+com\mx\qd\model\Modulo_model.class
 com\mx\qd\controller\TypeCard_controller.class
-com\mx\qd\controller\TypeTabla_controller.class
+com\mx\qd\controller\Modulo_controller.class
 com\mx\qd\model\TypeCard_model.class
+com\mx\qd\model\Conexion_model.class
 com\mx\qd\controller\TypeGrafica_controller.class
+com\mx\qd\controller\Conexion_controller.class
+com\mx\qd\controller\TypeBd_controller.class
+com\mx\qd\controller\TypeTabla_controller.class
 com\mx\qd\model\TypeGrafica_model.class
 com\mx\qd\model\TypeTabla_model.class
-com\mx\qd\controller\TypeBd_controller.class
 com\mx\qd\model\TypeBd_model.class

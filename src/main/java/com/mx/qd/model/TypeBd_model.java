@@ -12,7 +12,7 @@ public class TypeBd_model {
     
     public List<Map<String,Object>> select() {
         
-        String query = "SELECT * FROM type_bd";
+        String query = "SELECT id_tbd, nombre, descripcion FROM type_bd WHERE status = 1";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<Map<String,Object>> empRows = jdbcTemplate.queryForList(query);
         
@@ -27,7 +27,7 @@ public class TypeBd_model {
         try
         {
             num_afectados=jdbcTemplate.update(
-                        "INSERT INTO type_bd( nombre, descripcion ) VALUES (?, ?)", // colocar todo asi 
+                        "INSERT INTO type_bd( nombre, descripcion,status ) VALUES (?, ?, 1)", // colocar todo asi 
                         nombre, desc
             );
             System.out.println("Numero de filas afectadas = " +num_afectados);
@@ -62,7 +62,7 @@ public class TypeBd_model {
         
         try {
             int num_afectados = jdbcTemplate.update(
-                    "DELETE FROM type_bd WHERE id_tbd = ?", id
+                    "UPDATE type_bd set status = 0 WHERE id_tbd = ?", id
             );
         } catch (DataAccessException e) {
             System.out.println("Se genero un error");

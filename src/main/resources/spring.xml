@@ -9,7 +9,7 @@
         
         <context:property-placeholder location="classpath:data-access.properties"/>
         
-              <bean id="TypeBd_model" class="com.mx.qd.model.TypeBd_model">
+             <bean id="TypeBd_model" class="com.mx.qd.model.TypeBd_model">
                     <property name="dataSource" ref="dataSource" />
 	</bean>
         
@@ -22,6 +22,14 @@
              </bean>
              
              <bean id="TypeTabla_model" class="com.mx.qd.model.TypeTabla_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="Modulo_model" class="com.mx.qd.model.Modulo_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="Conexion_model" class="com.mx.qd.model.Conexion_model">
                  <property name="dataSource" ref="dataSource"></property>
              </bean>
                                            	                     

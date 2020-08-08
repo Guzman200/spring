@@ -13,7 +13,7 @@ public class TypeTabla_model {
     
     public List<Map<String,Object>> select() {
         
-        String query = "SELECT * FROM type_tabla";
+        String query = "SELECT * FROM type_tabla WHERE status = 1";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<Map<String,Object>> empRows = jdbcTemplate.queryForList(query);
         
@@ -45,7 +45,7 @@ public class TypeTabla_model {
         try {
             
             jdbcTemplate.update(
-                    "INSERT INTO type_tabla values (NULL, ?, ?)",
+                    "INSERT INTO type_tabla (type, descripcion, status) values (?, ?, 1)",
                     tipo, desc
             );
             
@@ -63,7 +63,7 @@ public class TypeTabla_model {
         
         try {
             jdbcTemplate.update(
-                    "DELETE FROM type_tabla WHERE id_tt = ?",
+                    "UPDATE type_tabla set status = 0 WHERE id_tt = ?",
                     id
             );
         } catch (DataAccessException e) {

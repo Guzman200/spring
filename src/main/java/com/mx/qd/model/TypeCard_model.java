@@ -16,7 +16,7 @@ public class TypeCard_model {
     
     public List<Map<String,Object>> select() {
         
-        String query = "SELECT * FROM type_card";
+        String query = "SELECT * FROM type_card WHERE status = 1";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<Map<String,Object>> empRows = jdbcTemplate.queryForList(query);
         
@@ -48,7 +48,7 @@ public class TypeCard_model {
         try {
             
             jdbcTemplate.update(
-                    "INSERT INTO type_card values (NULL, ?, ?)",
+                    "INSERT INTO type_card (type, descripcion, status) values (?, ?, 1)",
                     tipo, desc
             );
             
@@ -66,7 +66,7 @@ public class TypeCard_model {
         
         try {
             jdbcTemplate.update(
-                    "DELETE FROM type_card WHERE id_tc = ?",
+                    "UPDATE type_card set status = 0 WHERE id_tc = ?",
                     id
             );
         } catch (DataAccessException e) {
