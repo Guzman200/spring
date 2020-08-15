@@ -14,6 +14,8 @@ function init () {
             { "data" : "password" },
             { "data" : "bd" },
             { "data" : "nombre" },
+            { "data" : "id_tbd",
+              "visible" : false},
             {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-info btn-sm btnEditar'>EDIT</button><button class='btn btn-danger btn-sm btnBorrar'>DELETE</button></div></div>"}
         ]
     });
@@ -31,18 +33,13 @@ function llenarSelect (){
             let selectAdd = document.getElementById("conexionTipoBD");
             let selectEdit = document.getElementById("conexionTipoBDEdit");
            
-            for(let item of data.data){
+            for( let item of data.data ){
                 let option = document.createElement("option");
-                let option2 = document.createElement("option");
                 option.text = item.nombre;
                 option.value = item.id_tbd;
-                option2.text = item.nombre;
-                option2.value = item.id_tbd;
-                selectAdd.appendChild(option);
-                selectEdit.appendChild(option2);
-            }
-            
-            
+                selectAdd.appendChild(option);     
+            }  
+            selectEdit.innerHTML = selectAdd.innerHTML;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -58,6 +55,7 @@ const formEditConexion = document.getElementById('formEditConexion');
 
 formAddConexion.addEventListener('submit',  (e) => {
     e.preventDefault();
+    
     let selectAdd = document.getElementById("conexionTipoBD");
     
     if( selectAdd.value === "default"){
@@ -82,7 +80,7 @@ formAddConexion.addEventListener('submit',  (e) => {
                 }else{
                     notificarError(resp);
                 }
-                console.log("Respuesta del servidor : " + resp);
+                
             },
             error : function(jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
@@ -141,43 +139,27 @@ $(document).on('click', '.btnEditar', function () {
     
     /* Cargamos los datos obtenidos al modal editar */
     idConexion = data["id_co"];
-    console.log("Id del tipo de BD a editar = " + idConexion);
+    id_tbd = data['id_tbd'];
+    console.log("Id del tipo de Conexion a editar = " + idConexion);
+    console.log("Id del tipo de BD a editar = " + id_tbd);
+    
     $("#urlEdit").val(data["url"]);
     $("#loginEdit").val(data["login"]);
     $("#passEdit").val(data["password"]);
     $("#bdEdit").val(data["bd"]);
     
-    let idTypeBD = getIdTypeBD(idConexion);
+    let selectEdit = document.getElementById("conexionTipoBDEdit");
+    
+    for(let i = 0; i<selectEdit.length; i++){
+        let option = selectEdit[i];
+        if(parseInt( option.value ) === parseInt( id_tbd)){
+            selectEdit.value = option.value;
+        }
+    }
     
     $('#modalEditarConexion').modal('show');
     
 });
-
-function getIdTypeBD(id_co){
-    $.ajax({
-        url : 'selectTypeBD_conexion.do',
-        type : "POST",
-        data: { 
-            id : id_co
-        },
-        dataType: 'json',
-        success : function(data, textStatus, jqXHR) {
-            let id = data.data[0]['id_tbd'];
-            let selectEdit = document.getElementById("conexionTipoBDEdit");
-    
-            console.log(id)
-            for(let i = 0; i<selectEdit.length; i++){
-                let option = selectEdit[i];
-                if(option.value == id){
-                    selectEdit.value = option.value;
-                }
-            }
-        },
-        error : function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus);
-        }
-    });
-}
 
 $(document).on('click', '.btnBorrar', async function () {
     

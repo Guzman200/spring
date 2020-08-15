@@ -12,7 +12,7 @@ public class Conexion_model {
     
      public List<Map<String,Object>> select() {
         
-        String query = "SELECT c.id_co, c.url, c.login, c.password, c.bd, tbd.nombre  FROM conexion c, type_bd tbd WHERE c.id_tbd = tbd.id_tbd";
+        String query = "SELECT c.id_co, c.url, c.login, c.password, c.bd, tbd.nombre, c.id_tbd  FROM conexion c, type_bd tbd WHERE c.id_tbd = tbd.id_tbd";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<Map<String,Object>> empRows = jdbcTemplate.queryForList(query);
       

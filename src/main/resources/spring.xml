@@ -32,6 +32,22 @@
              <bean id="Conexion_model" class="com.mx.qd.model.Conexion_model">
                  <property name="dataSource" ref="dataSource"></property>
              </bean>
+             
+             <bean id="ControlUno_model" class="com.mx.qd.model.ControlUno_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="Formato_model" class="com.mx.qd.model.Formato_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="ControlDos_model" class="com.mx.qd.model.ControlDos_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="ControlTres_model" class="com.mx.qd.model.ControlTres_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
                                            	                     
 	<bean id="dataSource" class="${jdbc.dataSourceOracle}">  
                 <property name="driverClassName" value="${jdbc.driverClassNameOracle}" />  

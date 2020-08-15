@@ -47,6 +47,7 @@
                                     <th>Password</th>
                                     <th>BD</th>
                                     <th>Nombre</th>
+                                    <th>Id_tbd</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
