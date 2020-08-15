@@ -203,7 +203,7 @@
                                             <i class="fas fa-route"></i>
                                         </span>
                                     </div>
-                                    <input type="text" class="form-control" id="colorDos"
+                                    <input type="color" class="form-control" id="colorDos"
                                         placeholder="Color Dos" required>
                                 </div>
 
@@ -218,7 +218,7 @@
                                             <i class="fas fa-route"></i>
                                         </span>
                                     </div>
-                                    <input type="text" class="form-control" id="colorUno"
+                                    <input type="color" class="form-control" id="colorUno"
                                         placeholder="Color Uno" required>
                                 </div>
 
