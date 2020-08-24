@@ -13,27 +13,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ControlTres_controller {
-    
+
     @RequestMapping(value = "altaControlTres.do")
-    public ModelAndView index(){
+    public ModelAndView index() {
         ModelAndView mv = new ModelAndView();
-        
-       mv.setViewName("altaControlTres");
-       return mv;
+
+        mv.setViewName("altaControlTres");
+        return mv;
     }
-    
-    @RequestMapping( value = "select_controlTres.do", method = RequestMethod.GET)
+
+    @RequestMapping(value = "select_controlTres.do", method = RequestMethod.GET)
     @ResponseBody
-    public String select(){
+    public String select() {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         ControlTres_model control = (ControlTres_model) ctx.getBean("ControlTres_model");
-        
+
         JSONObject retorno = new JSONObject();
         retorno.put("data", control.select());
-        
+
         return retorno.toString();
     }
-    
+
     @RequestMapping(value = "insert_controlTres.do")
     @ResponseBody
     public String insert(
@@ -54,20 +54,19 @@ public class ControlTres_controller {
             @RequestParam(required = false) String seriey,
             @RequestParam(required = false) String id_p,
             @RequestParam(required = false) String id_e
-    ){
-         
+    ) {
+
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         ControlTres_model control = (ControlTres_model) ctx.getBean("ControlTres_model");
         String retorno = "OK";
-        
-            if(!control.insert(modulo, grafica, conexion, modulo, pos_x, pos_y, altura, anchura, colorUno, colorDos, tipo, titulo, descripcion, seriex, seriey)){
-                retorno = "Error al insertar registro";
-            }
-        
+
+        if (!control.insert(modulo, grafica, conexion, modulo, pos_x, pos_y, altura, anchura, colorUno, colorDos, tipo, titulo, descripcion, seriex, seriey)) {
+            retorno = "Error al insertar registro";
+        }
+
         return retorno;
     }
-    
-    
+
     @RequestMapping(value = "update_controlTres.do")
     @ResponseBody
     public String update(
@@ -88,31 +87,43 @@ public class ControlTres_controller {
             @RequestParam(required = false) String seriey,
             @RequestParam(required = false) String id_p,
             @RequestParam(required = false) String id_e
-    ){
-         
+    ) {
+
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         ControlTres_model control = (ControlTres_model) ctx.getBean("ControlTres_model");
         String retorno = "OK";
-        
-            if(!control.update(modulo, grafica, conexion, modulo, pos_x, pos_y, altura, anchura, colorUno, colorDos, tipo, titulo, descripcion, seriex, seriey, id_g, id_p, id_e)){
-                retorno = "Error al insertar registro";
-            }
-        
+
+        if (!control.update(modulo, grafica, conexion, modulo, pos_x, pos_y, altura, anchura, colorUno, colorDos, tipo, titulo, descripcion, seriex, seriey, id_g, id_p, id_e)) {
+            retorno = "Error al insertar registro";
+        }
+
         return retorno;
     }
-    
+
     @RequestMapping(value = "delete_controlTres.do")
     @ResponseBody
-    public String delete(@RequestParam(required = false) String id_g){
-         
+    public String delete(@RequestParam(required = false) String id_g) {
+
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         ControlTres_model control = (ControlTres_model) ctx.getBean("ControlTres_model");
         String retorno = "OK";
-        if(!control.delete(id_g)){
+        if (!control.delete(id_g)) {
             retorno = "Error al eliminar";
         }
-                
+
         return retorno;
     }
-    
+
+    @RequestMapping(value = "selectControlesTres_modulo.do", method = RequestMethod.GET)
+    @ResponseBody
+    public String selectControlesUno_modulo(@RequestParam(required = true) String id_modulo) {
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        ControlTres_model control = (ControlTres_model) ctx.getBean("ControlTres_model");
+
+        JSONObject retorno = new JSONObject();
+        retorno.put("data", control.select_controles(id_modulo));
+
+        return retorno.toString();
+    }
+
 }

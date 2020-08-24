@@ -43,14 +43,15 @@ public class Conexion_controller {
             @RequestParam(required = false) String login, 
             @RequestParam(required = false) String pass, 
             @RequestParam(required = false) String bd,
-            @RequestParam(required = false) String id_tbd
+            @RequestParam(required = false) String id_tbd,
+            @RequestParam(required = false) String puerto
     ){
         
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         Conexion_model con = (Conexion_model) ctx.getBean("Conexion_model");
         String retorno = "OK";
         
-        if(!con.insert(url, login, pass, bd, id_tbd))
+        if(!con.insert(url, login, pass, bd, id_tbd,puerto))
         {
             retorno = "Error al ingresar registro";
         }
@@ -66,14 +67,15 @@ public class Conexion_controller {
             @RequestParam(required = false) String pass, 
             @RequestParam(required = false) String bd,
             @RequestParam(required = false) String id_tbd,
-            @RequestParam(required = false) String id_co
+            @RequestParam(required = false) String id_co,
+            @RequestParam(required = false) String puerto
     ){
         
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         Conexion_model modulo = (Conexion_model) ctx.getBean("Conexion_model");
         String retorno = "OK";
         
-        if(!modulo.update(url, login, pass, bd, id_tbd, id_co)){
+        if(!modulo.update(url, login, pass, bd, id_tbd, id_co,puerto)){
             retorno = "Error al intentar modificar";
         }
   

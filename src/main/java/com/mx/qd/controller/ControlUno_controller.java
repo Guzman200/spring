@@ -38,7 +38,7 @@ public class ControlUno_controller {
     @RequestMapping(value = "insert_controlUno.do")
     @ResponseBody
     public String insert(
-             @RequestParam(required = false) String id_c,
+            @RequestParam(required = false) String id_c,
             @RequestParam(required = false) String modulo,
             @RequestParam(required = false) String tarjeta,
             @RequestParam(required = false) String conexion,
@@ -110,5 +110,17 @@ public class ControlUno_controller {
         }
                 
         return retorno;
+    }
+    
+    @RequestMapping( value = "selectControlesUno_modulo.do", method = RequestMethod.GET)
+    @ResponseBody
+    public String selectControlesUno_modulo(@RequestParam(required = true) String id_modulo){
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        ControlUno_model control = (ControlUno_model) ctx.getBean("ControlUno_model");
+        
+        JSONObject retorno = new JSONObject();
+        retorno.put("data", control.select_controles(id_modulo));
+        
+        return retorno.toString();
     }
 }

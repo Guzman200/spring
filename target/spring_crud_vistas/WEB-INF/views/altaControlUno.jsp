@@ -2,350 +2,362 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/bootstrap/css/bootstrap.min.css">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/bootstrap/css/bootstrap.min.css">
 
-    <!-- DataTables .-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/datatables.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/datatables-responsive/css/responsive.bootstrap4.min.css">
-    
-    <!-- sweetalert2 -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/sweetalert2/sweetalert2.min.css">
-    <!-- SweetAlert 2 -->
-    <script src="${pageContext.request.contextPath}/plugins/sweetalert2/sweetalert2.all.js"></script>
+        <!-- DataTables .-->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/datatables.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/datatables-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+        <!-- sweetalert2 -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/sweetalert2/sweetalert2.min.css">
+        <!-- SweetAlert 2 -->
+        <script src="${pageContext.request.contextPath}/plugins/sweetalert2/sweetalert2.all.js"></script>
 
 
-    <title>ALTA CONTROL</title>
-</head>
+        <title>ALTA CONTROL</title>
+    </head>
 
-<body class="bg-dark">
+    <body class="bg-dark">
 
-    <!-- TABLA CONEXION -->
-    <div class="container-fluid pt-4">
-        <div class="row">
-            <div class="col-12">
+        <!-- TABLA CONEXION -->
+        <div class="container-fluid pt-4">
+            <div class="row">
+                <div class="col-12">
 
-                <div class="card">
-                    <div class="card-header">
-                        <button id="btnAddControl" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalAgregarControl">
-                            Alta Control
-                        </button>
+                    <div class="card">
+                        <div class="card-header">
+                            <button id="btnAddControl" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalAgregarControl">
+                                Alta Control
+                            </button>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example1" class="table table-bordered table-striped tablaControl">
+                                <thead>
+                                    <tr>
+
+                                        <th>id_c</th>
+                                        <th>id_tc</th>
+                                        <th>id_m</th>
+                                        <th>id_f</th>
+                                        <th>id_e</th>
+                                        <th>id_co</th>
+
+                                        <th>Nombre Modulo</th>
+                                        <th>Tipo</th>
+                                        <th>Altura</th>
+                                        <th>Anchura</th>
+                                        <th>Color 1</th>
+                                        <th>Color 2</th>
+                                        <th>Titulo</th>
+                                        <th>Descripción</th>
+                                        <th>Posición X</th>
+                                        <th>Posición Y</th>
+                                        <th>Formato</th> 
+                                        <th>Tipo Tarjeta</th>
+                                        <th>Conexión</th>
+                                        <th>id_p</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                </tbody>
+
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped tablaControl">
-                            <thead>
-                                <tr>
-                                               
-                                    <th>id_c</th>
-                                    <th>id_tc</th>
-                                    <th>id_m</th>
-                                    <th>id_f</th>
-                                    <th>id_e</th>
-                                    <th>id_co</th>
-                       
-                                    <th>Nombre Modulo</th>
-                                    <th>Tipo</th>
-                                    <th>Altura</th>
-                                    <th>Anchura</th>
-                                    <th>Color 1</th>
-                                    <th>Color 2</th>
-                                    <th>Titulo</th>
-                                    <th>Descripción</th>
-                                    <th>Posición X</th>
-                                    <th>Posición Y</th>
-                                    <th>Formato</th> 
-                                    <th>Tipo Tarjeta</th>
-                                    <th>Conexión</th>
-                                    <th>id_p</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                            </tbody>
-
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
-    </div>
-    <!-- /. TABLA CONEXION -->
+        <!-- /. TABLA CONEXION -->
 
 
 
-    <!--=====================================
-    MODAL AGREGAR CONTROL 
-    ======================================-->
+        <!--=====================================
+        MODAL AGREGAR CONTROL 
+        ======================================-->
 
-    <div id="modalAgregarControl" class="modal fade" role="dialog">
+        <div id="modalAgregarControl" class="modal fade" role="dialog">
 
-        <div class="modal-dialog">
+            <div class="modal-dialog">
 
-            <div class="modal-content">
+                <div class="modal-content">
 
-                <form id="formAddControl">
+                    <form id="formAddControl">
 
-                    <!--=====================================
-                        HEADER DEL MODAL
-                    ======================================-->
+                        <!--=====================================
+                            HEADER DEL MODAL
+                        ======================================-->
 
-                    <div class="modal-header">
+                        <div class="modal-header">
 
-                        <h5 class="modal-title" id="exampleModalLabel">Alta Control Uno</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-
-                    </div>
-
-                    <!--=====================================
-                        CUERPO DEL MODAL
-                    ====================================== -->
-
-                    <div class="modal-body">
-
-                        <!-- ENTRADA PARA EL TIPO DE MODULO -->
-                        <div class="input-group pt-3">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text">
-                                    <i class="fab fa-cuttlefish"></i>
-                                </span>
-                            </div>
-                            <select class="form-control" id="selectModulo">
-                                <option value="default">Seleccione un modulo</option> 
-                            </select>
-                        </div>
-                        
-                        <div class="row">
-
-                            <div class="col-6">
-                                <!-- ENTRADA PARA LA POSICION X -->
-                                <div class="input-group pt-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-user"></i>
-                                        </span>
-                                    </div>
-                                    <input type="number" class="form-control" id="posX"
-                                        placeholder="Posición X" required>
-                                </div>
-                            </div>
-
-                            <div class="col-6">
-                                <!-- ENTRADA PARA LA POSICION Y -->
-                                <div class="input-group pt-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-users-cog"></i>
-                                        </span>
-                                    </div>
-                                    <input type="number" class="form-control" id="posY"
-                                        placeholder="Posición Y" required>
-                                </div>
-                            </div>
+                            <h5 class="modal-title" id="exampleModalLabel">Alta Control Uno</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
 
                         </div>
 
-                        <div class="row">
+                        <!--=====================================
+                            CUERPO DEL MODAL
+                        ====================================== -->
 
-                            <div class="col-6">
-                                
-                                <!-- ENTRADA PARA LA ANCHURA -->
-                                <div class="input-group pt-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-phone"></i>
-                                        </span>
+                        <div class="modal-body">
+
+                            <div class="row">
+
+                                <div class="col-6">
+                                    <!-- ENTRADA PARA EL TIPO DE MODULO -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fab fa-cuttlefish"></i>
+                                            </span>
+                                        </div>
+                                        <select class="form-control" id="selectModulo">
+                                            <option value="default">Seleccione un modulo</option> 
+                                        </select>
                                     </div>
-                                    <input type="number" class="form-control" id="anchura"
-                                        placeholder="Anchura" required>
+                                </div>
+
+                                <div class="col-6">
+                                    <!-- ENTRADA PARA EL TIPO DE CONEXION -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fab fa-cuttlefish"></i>
+                                            </span>
+                                        </div>
+                                        <select class="form-control" id="selectConexion">
+                                            <option value="default">Seleccione un tipo de conexion</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-3">
+                                    <!-- ENTRADA PARA LA POSICION X -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-user"></i>
+                                            </span>
+                                        </div>
+                                        <input type="number" class="form-control" id="posX"
+                                               placeholder="Posición X" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+                                    <!-- ENTRADA PARA LA POSICION Y -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-users-cog"></i>
+                                            </span>
+                                        </div>
+                                        <input type="number" class="form-control" id="posY"
+                                               placeholder="Posición Y" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-3">
+
+                                    <!-- ENTRADA PARA EL COLOR 1 -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-route"></i>
+                                            </span>
+                                        </div>
+                                        <input type="color" class="form-control" id="colorUno"
+                                               placeholder="Color Uno" required>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-3">
+
+                                    <!-- ENTRADA PARA EL COLOR 2 -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-route"></i>
+                                            </span>
+                                        </div>
+                                        <input type="color" class="form-control" id="colorDos"
+                                               placeholder="Color Dos" required>
+                                    </div>
+
                                 </div>
 
                             </div>
 
-                            <div class="col-6">
+                            <div class="row">
 
-                                <!-- ENTRADA PARA LA ALTURA -->
-                                <div class="input-group pt-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-phone"></i>
-                                        </span>
+                                <div class="col-6">
+
+                                    <!-- ENTRADA PARA LA ANCHURA -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-phone"></i>
+                                            </span>
+                                        </div>
+                                        <input type="number" class="form-control" id="anchura"
+                                               placeholder="Anchura" required>
                                     </div>
-                                    <input type="number" class="form-control" id="altura"
-                                        placeholder="Altura" required>
+
+                                </div>
+
+                                <div class="col-6">
+
+                                    <!-- ENTRADA PARA LA ALTURA -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-phone"></i>
+                                            </span>
+                                        </div>
+                                        <input type="number" class="form-control" id="altura"
+                                               placeholder="Altura" required>
+                                    </div>
+
                                 </div>
 
                             </div>
 
-                        </div>
-                            
-                        <div class="row">
 
-                            <div class="col-6">
-                                
-                                <!-- ENTRADA PARA EL COLOR 2 -->
-                                <div class="input-group pt-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-route"></i>
-                                        </span>
+
+
+                            <div class="row">
+
+                                <div class="col-6">
+                                    
+                                    <!-- ENTRADA PARA LA DESCRIPCION -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-route"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="descripcion"
+                                               placeholder="Descripción" required>
                                     </div>
-                                    <input type="color" class="form-control" id="colorDos"
-                                        placeholder="Color Dos" required>
+
+                                </div>
+
+                                <div class="col-6">
+
+                                    <!-- ENTRADA PARA EL TITULO -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fas fa-route"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control" id="titulo"
+                                               placeholder="Titulo" required>
+                                    </div>
                                 </div>
 
                             </div>
 
-                            <div class="col-6">
-
-                                <!-- ENTRADA PARA EL COLOR 1 -->
-                                <div class="input-group pt-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-route"></i>
-                                        </span>
-                                    </div>
-                                    <input type="color" class="form-control" id="colorUno"
-                                        placeholder="Color Uno" required>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                       
-                        <div class="row">
-
-                            <div class="col-6">
-
-                                <!-- ENTRADA PARA EL TIPO -->
-                                <div class="input-group pt-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-envelope"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" id="tipo"
-                                        placeholder="Tipo" required>
-                                </div>
-
-                            </div>
-
-                            <div class="col-6">
-
-                                <!-- ENTRADA PARA EL TITULO -->
-                                <div class="input-group pt-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="fas fa-route"></i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" id="titulo"
-                                        placeholder="Titulo" required>
-                                </div>
-                            </div>
-
-                        </div>
-
-                            <!-- ENTRADA PARA LA DESCRIPCION -->
+                            <!-- ENTRADA PARA EL TIPO -->
                             <div class="input-group pt-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">
-                                        <i class="fas fa-route"></i>
+                                        <i class="fas fa-envelope"></i>
                                     </span>
                                 </div>
-                                <input type="text" class="form-control" id="descripcion"
-                                    placeholder="Descripción" required>
+                                <!--
+                                <input type="text" class="form-control" id="tipo"
+                                       placeholder="Tipo" required> -->
+                                <textarea class="form-control" placeholder="Tipo" id="tipo" required></textarea>
                             </div>
 
 
-                            <!-- ENTRADA PARA EL TIPO DE TARJETA -->
-                            <div class="input-group pt-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fab fa-cuttlefish"></i>
-                                    </span>
-                                </div>
-                                <select class="form-control" name="tipoTarjeta" id="selectCard">
-                                    <option value="default" >Seleccione un tipo de tarjeta</option>
-                                </select>
+                            <div class="row">
+                                 <div class="col-6">
+                                        <!-- ENTRADA PARA EL TIPO DE TARJETA -->
+                                        <div class="input-group pt-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fab fa-cuttlefish"></i>
+                                                </span>
+                                            </div>
+                                            <select class="form-control" name="tipoTarjeta" id="selectCard">
+                                                <option value="default" >Seleccione un tipo de tarjeta</option>
+                                            </select>
+                                        </div>
+                                  </div>
+
+                                  <div class="col-6">
+                                        <!-- ENTRADA PARA EL TIPO DE FORMATO -->
+                                        <div class="input-group pt-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fab fa-cuttlefish"></i>
+                                                </span>
+                                            </div>
+                                            <select class="form-control" name="tipoConexion" id="selectFormato">
+                                                <option value="default" >Seleccione un tipo de formato</option> 
+                                            </select>
+                                        </div>
+                                 </div>
                             </div>
 
-                        
-                            <!-- ENTRADA PARA EL TIPO DE CONEXION -->
-                            <div class="input-group pt-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fab fa-cuttlefish"></i>
-                                    </span>
-                                </div>
-                                <select class="form-control" id="selectConexion">
-                                    <option value="default">Seleccione un tipo de conexion</option>
-                                </select>
-                            </div>
-                            
-                             <!-- ENTRADA PARA EL TIPO DE FORMATO -->
-                            <div class="input-group pt-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="fab fa-cuttlefish"></i>
-                                    </span>
-                                </div>
-                                <select class="form-control" name="tipoConexion" id="selectFormato">
-                                    <option value="default" >Seleccione un tipo de formato</option> 
-                                </select>
-                            </div>
-
-                    </div>
-                    
+                        </div>
 
 
 
 
-                    <!--=====================================
-                        PIE DEL MODAL
-                    ======================================-->
 
-                    <div class="modal-footer">
-                        <button id="close" type="button" class="btn btn-light pull-left"
-                            data-dismiss="modal">Cancelar</button>
-                        <button id="registrarSucursal" name="registrarSucursal" type="submit"
-                            class="btn btn-primary">Guardar Control</button>
-                    </div>
-                </form>
+                        <!--=====================================
+                            PIE DEL MODAL
+                        ======================================-->
+
+                        <div class="modal-footer">
+                            <button id="close" type="button" class="btn btn-light pull-left"
+                                    data-dismiss="modal">Cancelar</button>
+                            <button id="registrarSucursal" name="registrarSucursal" type="submit"
+                                    class="btn btn-primary">Guardar Control</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="${pageContext.request.contextPath}/plugins/jquery/jquery-3.3.1.min.js"></script>  
-      
-    <script src="${pageContext.request.contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>  
-   
-    <!-- DataTables -->
-    <script src="${pageContext.request.contextPath}/plugins/datatables/datatables.min.js"></script>
-    <script src="${pageContext.request.contextPath}/plugins/datatables/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="${pageContext.request.contextPath}/plugins/datatables/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="${pageContext.request.contextPath}/plugins/datatables/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="${pageContext.request.contextPath}/plugins/jquery/jquery-3.3.1.min.js"></script>  
 
-    <script src="${pageContext.request.contextPath}/js/altaControlUno.js"></script>
+        <script src="${pageContext.request.contextPath}/plugins/bootstrap/js/bootstrap.min.js"></script>  
+
+        <!-- DataTables -->
+        <script src="${pageContext.request.contextPath}/plugins/datatables/datatables.min.js"></script>
+        <script src="${pageContext.request.contextPath}/plugins/datatables/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+        <script src="${pageContext.request.contextPath}/plugins/datatables/datatables-responsive/js/dataTables.responsive.min.js"></script>
+        <script src="${pageContext.request.contextPath}/plugins/datatables/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
 
-</body>
+        <script src="${pageContext.request.contextPath}/js/altaControlUno.js"></script>
+
+
+    </body>
 
 </html>

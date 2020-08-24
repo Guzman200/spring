@@ -369,3 +369,294 @@ BEGIN
 END
 $$
 
+---- SIGUIENTE CRUD -------------
+
+CREATE TABLE tipo_campo(
+	id_tca int(11) NOT NULL AUTO_INCREMENT,
+	nombre text,
+	PRIMARY KEY (id_tca)
+);
+
+CREATE TABLE mnemotecnico_generico(
+	id_mge int(11) NOT NULL AUTO_INCREMENT,
+	id_tca int(11) NOT NULL,
+	FOREIGN KEY(id_tca) REFERENCES tipo_campo(id_tca),
+	mnemotecnico text NOT NULL,
+	label text NOT NULL,
+	valor_default text NOT NULL,
+	PRIMARY KEY (id_mge)
+);
+
+CREATE TABLE elemento_mge(
+	id_e int(11) NOT NULL,
+	id_mge int(11) NOT NULL,
+	FOREIGN KEY(id_e) REFERENCES elemento(id_e),
+	FOREIGN KEY(id_mge) REFERENCES mnemotecnico_generico(id_mge),
+	PRIMARY KEY(id_e,id_mge)
+);
+
+CREATE TABLE control1_mg(
+	id_c int(11) NOT NULL,
+	id_mge int(11) NOT NULL,
+	FOREIGN KEY(id_c) REFERENCES control_uno(id_c),
+	FOREIGN KEY(id_mge) REFERENCES mnemotecnico_generico(id_mge),
+	PRIMARY KEY(id_c,id_mge)
+);
+
+CREATE TABLE control2_mg(
+	id_t int(11) NOT NULL,
+	id_mge int(11) NOT NULL,
+	FOREIGN KEY(id_t) REFERENCES control_dos(id_t),
+	FOREIGN KEY(id_mge) REFERENCES mnemotecnico_generico(id_mge),
+	PRIMARY KEY(id_t,id_mge)
+);
+
+CREATE TABLE control3_mg(
+	id_g int(11) NOT NULL,
+	id_mge int(11) NOT NULL,
+	FOREIGN KEY(id_g) REFERENCES control_tres(id_g),
+	FOREIGN KEY(id_mge) REFERENCES mnemotecnico_generico(id_mge),
+	PRIMARY KEY(id_g,id_mge)
+);
+
+-- Consulta que devuelve los controles 1 que pertences al modulo seleccionado
+SELECT ec1.id_c,ec1.id_e, c1.titulo
+FROM elemento e, elemento_controlUno ec1, control_uno c1
+WHERE e.id_e = ec1.id_e and ec1.id_c = c1.id_c and c1.status = 1 and e.id_m = 1;
+
+-- Consulta que devuelve los controles 2 que pertences al modulo seleccionado
+SELECT ec2.id_t,ec2.id_e, c2.titulo
+FROM elemento e, elemento_controlDos ec2, control_dos c2
+WHERE e.id_e = ec2.id_e and ec2.id_t = c2.id_t and c2.status = 1 and e.id_m = 1;
+
+-- Consulta que devuelve los controles 3 que pertences al modulo seleccionado
+SELECT ec3.id_g,ec3.id_e, c3.titulo
+FROM elemento e, elemento_controlTres ec3, control_tres c3
+WHERE e.id_e = ec3.id_e and ec3.id_g = c3.id_g and c3.status = 1 and e.id_m = 1;
+
+-- PROCEDIMIENTO ALMACENADO PARA ALTA MNEMOTECNICO
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS alta_mnemotecnico $$
+CREATE PROCEDURE alta_mnemotecnico(
+	IN id_tca int, IN mnemotecnico text, IN label text, IN valor_default text,
+	IN pos_x int, IN pos_y int, IN id_m int, IN controles_1 text, IN controles_2 text,
+	IN controles_3 text
+)
+BEGIN
+
+	DECLARE _next TEXT DEFAULT NULL;
+	DECLARE _nextlen INT DEFAULT NULL;
+	DECLARE _value TEXT DEFAULT NULL;
+
+	DECLARE id_nemo int;
+	DECLARE id_pos int;
+	DECLARE id_elemento int;
+
+	-- INSERTAMOS EN LA TABLA MNEMOTECNICO
+	INSERT INTO mnemotecnico_generico (id_tca,mnemotecnico,label,valor_default) 
+	VALUES (id_tca,mnemotecnico,label,valor_default);
+
+	-- GUARDAMOS EL ID DE MNEMOTECNICO
+	SET id_nemo := LAST_INSERT_ID();
+
+	-- INSERTAMOS EN POSICION
+	INSERT INTO posicion (posicion_x,posicion_y) VALUES (pos_x,pos_y);
+
+	SET id_pos := LAST_INSERT_ID();
+
+	-- INSERTAMOS EN LA TABLA ELEMENTO
+	INSERT INTO elemento (id_p,id_m) VALUES (id_pos,id_m);
+
+	-- GUARDAMOS EL ID DE ELEMENTO
+	SET id_elemento := LAST_INSERT_ID();
+
+	-- INSERTAMOS EN LA TABLA ELEMENTO_MGE
+	INSERT INTO elemento_mge VALUES (id_elemento,id_nemo);
+
+	-- INSERTAMOS TODOS LOS CONTROLES 1
+	iterator:
+	LOOP
+	    
+	     IF LENGTH(TRIM(controles_1)) = 0 OR controles_1 IS NULL THEN
+	       LEAVE iterator;
+	     END IF;
+
+	    
+	     SET _next = SUBSTRING_INDEX(controles_1,',',1);
+
+	     SET _nextlen = LENGTH(_next);
+
+	     -- trim the value of leading and trailing spaces, in case of sloppy CSV strings
+	     SET _value = TRIM(_next);
+
+	     -- insert the extracted value into the target table
+	     INSERT INTO control1_mg (id_c,id_mge) VALUES (_next, id_nemo);
+
+	     SET controles_1 = INSERT(controles_1,1,_nextlen + 1,'');
+	END LOOP;
+
+	-- INSERTAMOS TODOS LOS CONTROLES 2
+	iterator:
+	LOOP
+	    
+	     IF LENGTH(TRIM(controles_2)) = 0 OR controles_2 IS NULL THEN
+	       LEAVE iterator;
+	     END IF;
+
+	    
+	     SET _next = SUBSTRING_INDEX(controles_2,',',1);
+
+	     SET _nextlen = LENGTH(_next);
+
+	     -- trim the value of leading and trailing spaces, in case of sloppy CSV strings
+	     SET _value = TRIM(_next);
+
+	     -- insert the extracted value into the target table
+	     INSERT INTO control2_mg (id_t,id_mge) VALUES (_next, id_nemo);
+
+	     SET controles_2 = INSERT(controles_2,1,_nextlen + 1,'');
+	END LOOP;
+
+	-- INSERTAMOS TODOS LOS CONTROLES 3
+	iterator:
+	LOOP
+	    
+	     IF LENGTH(TRIM(controles_3)) = 0 OR controles_3 IS NULL THEN
+	       LEAVE iterator;
+	     END IF;
+
+	    
+	     SET _next = SUBSTRING_INDEX(controles_3,',',1);
+
+	     SET _nextlen = LENGTH(_next);
+
+	     -- trim the value of leading and trailing spaces, in case of sloppy CSV strings
+	     SET _value = TRIM(_next);
+
+	     -- insert the extracted value into the target table
+	     INSERT INTO control3_mg (id_g,id_mge) VALUES (_next, id_nemo);
+
+	     SET controles_3 = INSERT(controles_3,1,_nextlen + 1,'');
+	END LOOP;
+	
+END $$
+
+CALL alta_mnemotecnico(1,'Nemo', 'label', 'default', 190, 190,1,'14,15','13','1232');
+
+
+-- CONSULTA PARA VISUALIZAR LOS DATOS
+
+SELECT 
+mg.id_mge,mg.id_tca,tc.nombre,mg.mnemotecnico,mg.label,mg.valor_default,e.id_m,e.id_p,p.posicion_x,posicion_y,
+e.id_e  
+FROM 
+mnemotecnico_generico mg, tipo_campo tc, elemento_mge emge, elemento e, posicion p
+WHERE 
+tc.id_tca = mg.id_tca and emge.id_mge = mg.id_mge and emge.id_e = e.id_e and
+	  e.id_p = p.id_p
+
+
+-- PROCEDIMIENTO PARA EDITAR MNEMOTECNICO
+DELIMITER $$
+DROP PROCEDURE IF EXISTS editar_mnemotecnico $$
+CREATE PROCEDURE editar_mnemotecnico(
+	IN _id_tca int, IN _mnemotecnico text, IN _label text, IN _valor_default text,
+	IN pos_x int, IN pos_y int, IN _id_m int, IN controles_1 text, IN controles_2 text,
+	IN controles_3 text,
+	IN _id_e int, IN _id_p int, IN _id_mge int
+)
+BEGIN
+
+	DECLARE _next TEXT DEFAULT NULL;
+	DECLARE _nextlen INT DEFAULT NULL;
+	DECLARE _value TEXT DEFAULT NULL;
+
+	DECLARE id_nemo int;
+	DECLARE id_pos int;
+	DECLARE id_elemento int;
+
+	-- MODIFICAMOS LA TABLA POSICION
+	UPDATE posicion set posicion_x = pos_x, posicion_y = pos_y WHERE id_p = _id_p;
+
+	-- MODIFICAMOS LA TABLA ELEMENTO
+	UPDATE elemento set id_m = _id_m WHERE id_e = _id_e;
+
+	-- MODIFICAMOS LA TABLA MNEMOTECNICO
+	UPDATE mnemotecnico_generico set id_tca = _id_tca, mnemotecnico = _mnemotecnico, 
+	label = _label, valor_default = _valor_default WHERE id_mge = _id_mge;
+
+	-- ELIMINAMOS TODOS LOS CONTROLES DE LA TABLA controles_mg donde id_mge se igual al que editamos
+	DELETE FROM control1_mg WHERE id_mge = _id_mge;
+	DELETE FROM control2_mg WHERE id_mge = _id_mge;
+	DELETE FROM control3_mg WHERE id_mge = _id_mge;
+
+	SET id_nemo = _id_mge;
+
+	-- INSERTAMOS TODOS LOS CONTROLES 1
+	iterator:
+	LOOP
+	    
+	     IF LENGTH(TRIM(controles_1)) = 0 OR controles_1 IS NULL THEN
+	       LEAVE iterator;
+	     END IF;
+
+	    
+	     SET _next = SUBSTRING_INDEX(controles_1,',',1);
+
+	     SET _nextlen = LENGTH(_next);
+
+	     -- trim the value of leading and trailing spaces, in case of sloppy CSV strings
+	     SET _value = TRIM(_next);
+
+	     -- insert the extracted value into the target table
+	     INSERT INTO control1_mg (id_c,id_mge) VALUES (_next, id_nemo);
+
+	     SET controles_1 = INSERT(controles_1,1,_nextlen + 1,'');
+	END LOOP;
+
+	-- INSERTAMOS TODOS LOS CONTROLES 2
+	iterator:
+	LOOP
+	    
+	     IF LENGTH(TRIM(controles_2)) = 0 OR controles_2 IS NULL THEN
+	       LEAVE iterator;
+	     END IF;
+
+	    
+	     SET _next = SUBSTRING_INDEX(controles_2,',',1);
+
+	     SET _nextlen = LENGTH(_next);
+
+	     -- trim the value of leading and trailing spaces, in case of sloppy CSV strings
+	     SET _value = TRIM(_next);
+
+	     -- insert the extracted value into the target table
+	     INSERT INTO control2_mg (id_t,id_mge) VALUES (_next, id_nemo);
+
+	     SET controles_2 = INSERT(controles_2,1,_nextlen + 1,'');
+	END LOOP;
+
+	-- INSERTAMOS TODOS LOS CONTROLES 3
+	iterator:
+	LOOP
+	    
+	     IF LENGTH(TRIM(controles_3)) = 0 OR controles_3 IS NULL THEN
+	       LEAVE iterator;
+	     END IF;
+
+	    
+	     SET _next = SUBSTRING_INDEX(controles_3,',',1);
+
+	     SET _nextlen = LENGTH(_next);
+
+	     -- trim the value of leading and trailing spaces, in case of sloppy CSV strings
+	     SET _value = TRIM(_next);
+
+	     -- insert the extracted value into the target table
+	     INSERT INTO control3_mg (id_g,id_mge) VALUES (_next, id_nemo);
+
+	     SET controles_3 = INSERT(controles_3,1,_nextlen + 1,'');
+	END LOOP;
+	
+END $$

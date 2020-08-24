@@ -105,6 +105,17 @@ public class ControlDos_model {
         return flag;
     }
      
+    public List<Map<String,Object>> select_controles(String id_modulo) {
+        
+        String query = "SELECT ec2.id_t,ec2.id_e, c2.titulo\n" +
+                        "FROM elemento e, elemento_controlDos ec2, control_dos c2\n" +
+                        "WHERE e.id_e = ec2.id_e and ec2.id_t = c2.id_t and c2.status = 1 and e.id_m = ?;";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        List<Map<String,Object>> empRows = jdbcTemplate.queryForList(query,id_modulo);
+      
+        return empRows;
+    }
+     
      
     public DataSource getDataSource() {
         return dataSource;

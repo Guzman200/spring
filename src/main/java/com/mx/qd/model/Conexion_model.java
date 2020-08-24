@@ -12,14 +12,14 @@ public class Conexion_model {
     
      public List<Map<String,Object>> select() {
         
-        String query = "SELECT c.id_co, c.url, c.login, c.password, c.bd, tbd.nombre, c.id_tbd  FROM conexion c, type_bd tbd WHERE c.id_tbd = tbd.id_tbd";
+        String query = "SELECT c.id_co, c.url, c.login, c.password, c.bd, tbd.nombre, c.id_tbd, c.puerto  FROM conexion c, type_bd tbd WHERE c.id_tbd = tbd.id_tbd";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         List<Map<String,Object>> empRows = jdbcTemplate.queryForList(query);
       
         return empRows;
     }
     
-    public boolean insert(String url, String login, String pass, String bd, String id_tbd){
+    public boolean insert(String url, String login, String pass, String bd, String id_tbd, String puerto){
         
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         boolean flag=true;
@@ -27,8 +27,8 @@ public class Conexion_model {
         try
         {
             num_afectados=jdbcTemplate.update(
-                        "INSERT INTO conexion ( url,login, password, bd, id_tbd ) VALUES (?,?,?,?,?)", 
-                        url,login, pass,bd,id_tbd
+                        "INSERT INTO conexion ( url,login, password, bd, id_tbd, puerto ) VALUES (?,?,?,?,?,?)", 
+                        url,login, pass,bd,id_tbd,puerto
             );
             System.out.println("Numero de filas afectadas = " +num_afectados);
         }catch (DataAccessException e)
@@ -40,13 +40,13 @@ public class Conexion_model {
         return flag;
     }
     
-    public boolean update(String url, String login, String pass, String bd, String id_tbd, String id_co){
+    public boolean update(String url, String login, String pass, String bd, String id_tbd, String id_co, String puerto){
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         boolean flag = true;
         try{
             int num_afectados = jdbcTemplate.update(
-                    "UPDATE conexion set url = ?, login = ?, password = ?, bd = ?, id_tbd = ? WHERE id_co = ?",
-                    url, login, pass, bd, id_tbd, id_co
+                    "UPDATE conexion set puerto = ?, url = ?, login = ?, password = ?, bd = ?, id_tbd = ? WHERE id_co = ?",
+                    puerto,url, login, pass, bd, id_tbd, id_co
             );
         }catch(DataAccessException e){
             System.out.println("Se genero un error");

@@ -112,4 +112,16 @@ public class ControlDos_controller {
         return retorno;
     }
     
+    @RequestMapping( value = "selectControlesDos_modulo.do", method = RequestMethod.GET)
+    @ResponseBody
+    public String selectControlesUno_modulo(@RequestParam(required = true) String id_modulo){
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        ControlDos_model control = (ControlDos_model) ctx.getBean("ControlDos_model");
+        
+        JSONObject retorno = new JSONObject();
+        retorno.put("data", control.select_controles(id_modulo));
+        
+        return retorno.toString();
+    }
+    
 }

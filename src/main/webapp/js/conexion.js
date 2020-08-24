@@ -16,6 +16,7 @@ function init () {
             { "data" : "nombre" },
             { "data" : "id_tbd",
               "visible" : false},
+            { "data" : "puerto"},
             {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-info btn-sm btnEditar'>EDIT</button><button class='btn btn-danger btn-sm btnBorrar'>DELETE</button></div></div>"}
         ]
     });
@@ -69,7 +70,8 @@ formAddConexion.addEventListener('submit',  (e) => {
                 login : $("#login").val(),
                 pass : $("#pass").val(),
                 bd : $("#bd").val(),
-                id_tbd : selectAdd.value
+                id_tbd : selectAdd.value,
+                puerto : $("#puerto").val()
             },
             beforeSend : function(xhr) {
             },
@@ -107,7 +109,8 @@ formEditConexion.addEventListener('submit', (e) => {
                 pass : $("#passEdit").val(),
                 bd : $("#bdEdit").val(),
                 id_tbd : selectEdit.value,
-                id_co : idConexion
+                id_co : idConexion,
+                puerto : $("#puertoEdit").val()
             },
             beforeSend : function(xhr) {
             },
@@ -147,6 +150,7 @@ $(document).on('click', '.btnEditar', function () {
     $("#loginEdit").val(data["login"]);
     $("#passEdit").val(data["password"]);
     $("#bdEdit").val(data["bd"]);
+    $("#puertoEdit").val(data["puerto"]);
     
     let selectEdit = document.getElementById("conexionTipoBDEdit");
     

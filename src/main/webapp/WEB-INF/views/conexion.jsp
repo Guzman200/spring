@@ -48,6 +48,7 @@
                                     <th>BD</th>
                                     <th>Nombre</th>
                                     <th>Id_tbd</th>
+                                    <th>Puerto</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -130,7 +131,7 @@
                                     <i class="fas fa-user"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" id="pass"
+                            <input type="password" class="form-control" id="pass"
                                 placeholder="Password" required>
                         </div>
 
@@ -143,6 +144,17 @@
                             </div>
                             <input type="text" class="form-control" id="bd"
                                 placeholder="Bd" required>
+                        </div>
+                        
+                        <!-- ENTRADA PARA EL PUERTO -->
+                        <div class="input-group pt-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="puerto"
+                                placeholder="Puerto" required>
                         </div>
 
                         <!-- ENTRADA PARA EL TIPO DE BD -->
@@ -236,7 +248,7 @@
                                     <i class="fas fa-user"></i>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" id="passEdit"
+                            <input type="password" class="form-control" id="passEdit"
                                 placeholder="Password">
                         </div>
 
@@ -249,6 +261,17 @@
                             </div>
                             <input type="text" class="form-control" id="bdEdit"
                                 placeholder="Bd" required>
+                        </div>
+                        
+                        <!-- ENTRADA PARA EL PUERTO -->
+                        <div class="input-group pt-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="puertoEdit"
+                                placeholder="Puerto" required>
                         </div>
 
                         <!-- ENTRADA PARA EL TIPO DE BD -->
