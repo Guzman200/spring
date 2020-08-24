@@ -384,6 +384,7 @@ CREATE TABLE mnemotecnico_generico(
 	mnemotecnico text NOT NULL,
 	label text NOT NULL,
 	valor_default text NOT NULL,
+	status INT NOT NULL DEFAULT 0,
 	PRIMARY KEY (id_mge)
 );
 
@@ -554,7 +555,7 @@ FROM
 mnemotecnico_generico mg, tipo_campo tc, elemento_mge emge, elemento e, posicion p
 WHERE 
 tc.id_tca = mg.id_tca and emge.id_mge = mg.id_mge and emge.id_e = e.id_e and
-	  e.id_p = p.id_p
+	  e.id_p = p.id_p and mg.status = 1
 
 
 -- PROCEDIMIENTO PARA EDITAR MNEMOTECNICO
