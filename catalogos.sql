@@ -385,15 +385,18 @@ CREATE TABLE mnemotecnico_generico(
 	label text NOT NULL,
 	valor_default text NOT NULL,
 	status INT NOT NULL DEFAULT 0,
+	valor_query TEXT NOT NULL,
 	PRIMARY KEY (id_mge)
 );
 
 CREATE TABLE elemento_mge(
 	id_e int(11) NOT NULL,
 	id_mge int(11) NOT NULL,
+	id_co int(11) NOT NULL,
 	FOREIGN KEY(id_e) REFERENCES elemento(id_e),
 	FOREIGN KEY(id_mge) REFERENCES mnemotecnico_generico(id_mge),
-	PRIMARY KEY(id_e,id_mge)
+	FOREIGN KEY(id_co) REFERENCES conexion(id_co),
+	PRIMARY KEY(id_e,id_mge,id_co)
 );
 
 CREATE TABLE control1_mg(
@@ -442,7 +445,7 @@ DROP PROCEDURE IF EXISTS alta_mnemotecnico $$
 CREATE PROCEDURE alta_mnemotecnico(
 	IN id_tca int, IN mnemotecnico text, IN label text, IN valor_default text,
 	IN pos_x int, IN pos_y int, IN id_m int, IN controles_1 text, IN controles_2 text,
-	IN controles_3 text
+	IN controles_3 text, IN id_co int, IN valor_query text
 )
 BEGIN
 
@@ -455,8 +458,8 @@ BEGIN
 	DECLARE id_elemento int;
 
 	-- INSERTAMOS EN LA TABLA MNEMOTECNICO
-	INSERT INTO mnemotecnico_generico (id_tca,mnemotecnico,label,valor_default) 
-	VALUES (id_tca,mnemotecnico,label,valor_default);
+	INSERT INTO mnemotecnico_generico (id_tca,mnemotecnico,label,valor_default,valor_query) 
+	VALUES (id_tca,mnemotecnico,label,valor_default,valor_query);
 
 	-- GUARDAMOS EL ID DE MNEMOTECNICO
 	SET id_nemo := LAST_INSERT_ID();
@@ -473,7 +476,7 @@ BEGIN
 	SET id_elemento := LAST_INSERT_ID();
 
 	-- INSERTAMOS EN LA TABLA ELEMENTO_MGE
-	INSERT INTO elemento_mge VALUES (id_elemento,id_nemo);
+	INSERT INTO elemento_mge VALUES (id_elemento,id_nemo,id_co);
 
 	-- INSERTAMOS TODOS LOS CONTROLES 1
 	iterator:
@@ -550,7 +553,7 @@ CALL alta_mnemotecnico(1,'Nemo', 'label', 'default', 190, 190,1,'14,15','13','12
 
 SELECT 
 mg.id_mge,mg.id_tca,tc.nombre,mg.mnemotecnico,mg.label,mg.valor_default,e.id_m,e.id_p,p.posicion_x,posicion_y,
-e.id_e  
+e.id_e,mg.valor_query,emge.id_co,  
 FROM 
 mnemotecnico_generico mg, tipo_campo tc, elemento_mge emge, elemento e, posicion p
 WHERE 
@@ -565,7 +568,8 @@ CREATE PROCEDURE editar_mnemotecnico(
 	IN _id_tca int, IN _mnemotecnico text, IN _label text, IN _valor_default text,
 	IN pos_x int, IN pos_y int, IN _id_m int, IN controles_1 text, IN controles_2 text,
 	IN controles_3 text,
-	IN _id_e int, IN _id_p int, IN _id_mge int
+	IN _id_e int, IN _id_p int, IN _id_mge int,
+	IN _id_co int, IN _valor_query text
 )
 BEGIN
 
@@ -583,9 +587,12 @@ BEGIN
 	-- MODIFICAMOS LA TABLA ELEMENTO
 	UPDATE elemento set id_m = _id_m WHERE id_e = _id_e;
 
+	-- MODIFICAMOS LA TABLA ELEMENTO_MGE
+	UPDATE elemento_mge set id_co = _id_co WHERE id_e = _id_e and id_mge = _id_mge;
+
 	-- MODIFICAMOS LA TABLA MNEMOTECNICO
 	UPDATE mnemotecnico_generico set id_tca = _id_tca, mnemotecnico = _mnemotecnico, 
-	label = _label, valor_default = _valor_default WHERE id_mge = _id_mge;
+	label = _label, valor_default = _valor_default, valor_query = _valor_query WHERE id_mge = _id_mge;
 
 	-- ELIMINAMOS TODOS LOS CONTROLES DE LA TABLA controles_mg donde id_mge se igual al que editamos
 	DELETE FROM control1_mg WHERE id_mge = _id_mge;
@@ -661,3 +668,9 @@ BEGIN
 	END LOOP;
 	
 END $$
+
+
+
+-- agregar en mnemotecnico columna valor_query *
+
+-- elemento_mge añadir id de conexion *

@@ -28,16 +28,19 @@ public class Mnemotecnico_controller {
             @RequestParam(required = false) String valor_default,
             @RequestParam(required = false) String posx,
             @RequestParam(required = false) String posy,
-            @RequestParam(required = false) String id_m, //
-            @RequestParam(required = false) String controles_1, //
-            @RequestParam(required = false) String controles_2, //
-            @RequestParam(required = false) String controles_3 //
+            @RequestParam(required = false) String id_m, 
+            @RequestParam(required = false) String controles_1, 
+            @RequestParam(required = false) String controles_2, 
+            @RequestParam(required = false) String controles_3,
+            @RequestParam(required = false) String id_co,
+            @RequestParam(required = false) String valor_query
             ) {
+        
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         Mnemotecnico_model nemo = (Mnemotecnico_model) ctx.getBean("Mnemotecnico_model");
         String retorno = "OK";
         
-        if(!nemo.insert(id_tca, mnemotecnico, label, valor_default, posx, posy, id_m, controles_1, controles_2, controles_3)){
+        if(!nemo.insert(id_tca, mnemotecnico, label, valor_default, posx, posy, id_m, controles_1, controles_2, controles_3,id_co,valor_query)){
             retorno = "Ha ocurrido un error al ingresar el registro";
         }
         System.out.println("El valor de retorno es " + retorno);
@@ -59,13 +62,15 @@ public class Mnemotecnico_controller {
             @RequestParam(required = false) String controles_3,
             @RequestParam(required = false) String id_e,
             @RequestParam(required = false) String id_p,
-            @RequestParam(required = false) String id_mge
+            @RequestParam(required = false) String id_mge,
+            @RequestParam(required = false) String id_co,
+            @RequestParam(required = false) String valor_query
             ) {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         Mnemotecnico_model nemo = (Mnemotecnico_model) ctx.getBean("Mnemotecnico_model");
         String retorno = "OK";
         
-        if(!nemo.update(id_tca, mnemotecnico, label, valor_default, posx, posy, id_m, controles_1, controles_2, controles_3, id_e, id_p, id_mge)){
+        if(!nemo.update(id_tca, mnemotecnico, label, valor_default, posx, posy, id_m, controles_1, controles_2, controles_3, id_e, id_p, id_mge,id_co,valor_query)){
             retorno = "Ha ocurrido un error al modificar el registro";
         }
        

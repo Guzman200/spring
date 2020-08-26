@@ -54,6 +54,8 @@
                                         <th>pos x</th>
                                         <th>pos y</th>
                                         <th>id_e</th>
+                                        <th>Valor query</th>
+                                        <th>id_co</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -197,6 +199,17 @@
 
                             </div>
 
+                            <!-- ENTRADA PARA VALOR QUERY -->
+                            <div class="input-group pt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fas fa-phone"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" id="valor_query"
+                                       placeholder="Valor query" required>
+                            </div>
+
 
                             <!-- ENTRADA PARA EL MODULO -->
                             <div class="input-group pt-3">
@@ -207,6 +220,18 @@
                                 </div>
                                 <select class="form-control" id="selectModulo">
                                     <option value="default">Seleccione un tipo de modulo</option>
+                                </select>
+                            </div>
+
+                            <!-- ENTRADA PARA EL TIPO DE CONEXION -->
+                            <div class="input-group pt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="fab fa-cuttlefish"></i>
+                                    </span>
+                                </div>
+                                <select class="form-control" id="selectConexion">
+                                    <option value="default">Seleccione un tipo de conexión</option>
                                 </select>
                             </div>
 

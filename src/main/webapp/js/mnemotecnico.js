@@ -4,6 +4,7 @@ const btnAddControl3 = document.getElementById('btnAddControl3');
 const btnAddControl = document.getElementById('btnAddControl');
 const selectModulo = document.getElementById("selectModulo");
 const selectCampo = document.getElementById("selectCampo");
+const selectConexion = document.getElementById("selectConexion");
 
 const formMnemotecnico = document.getElementById('formMnemotecnico');
 
@@ -43,6 +44,8 @@ function init() {
             {"data": "posicion_x"},
             {"data": "posicion_y"},
             {"data": "id_e"},
+            {"data": "valor_query"},
+            {"data": "id_co"},
             {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-info btn-sm btnEditar'>EDIT</button><button class='btn btn-danger btn-sm btnBorrar'>DELETE</button></div></div>"}
         ]
     });
@@ -76,6 +79,23 @@ function llenarSelects() {
                 option.text = item.nombre;
                 option.value = item.id_tca;
                 selectCampo.appendChild(option);
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(textStatus);
+        }
+    });
+    
+    // Llenamos el select de conexion
+    $.ajax({
+        "url": "select_conexion.do",
+        dataType: 'json',
+        success: function (data, textStatus, jqXHR) {
+            for (let item of data.data) {
+                let option = document.createElement("option");
+                option.text = item.url;
+                option.value = item.id_co;
+                selectConexion.appendChild(option);
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -139,11 +159,13 @@ btnAddControl.addEventListener('click', () => {
     opcion = 1;
     selectModulo.value = "default";
     selectCampo.value = "default";
+    selectConexion.value = "default";
     $("#mnemotecnico").val("");
     $("#label").val("");
     $("#valor_defaultl").val("");
     $("#posX").val("");
     $("#posY").val("");
+    $("#valor_query").val("");
     limpiarSelect(selectControl1, "Seleccione control 1");
     limpiarSelect(selectControl2, "Seleccione control 2");
     limpiarSelect(selectControl3, "Seleccione control 3");
@@ -181,7 +203,9 @@ formMnemotecnico.addEventListener('submit', (e) => {
                 controles_3: controles3_string,
                 id_e: id_e,
                 id_p: id_p,
-                id_mge: id_mge
+                id_mge: id_mge,
+                id_co : selectConexion.value,
+                valor_query : $("#valor_query").val()
             },
             beforeSend: function (xhr) {
             },
@@ -220,6 +244,9 @@ function  validar() {
         return false;
     } else if (selectModulo.value === "default") {
         notificarError("Selecciona un modulo");
+        return false;
+    }else if(selectConexion.value === "default"){
+        notificarError("Selecciona un tipo de conexión");
         return false;
     } else {
         // Empezamos a validar que por lo menos añada un control
@@ -426,6 +453,8 @@ $(document).on('click', '.btnEditar', function () {
 
     selectCampo.value = data['id_tca'];
     selectModulo.value = data['id_m'];
+    selectConexion.value = data['id_co'];
+    $("#valor_query").val(data['valor_query']);
     $("#label").val(data['label']);
     $("#mnemotecnico").val(data['mnemotecnico']);
     $("#valor_default").val(data['valor_default']);

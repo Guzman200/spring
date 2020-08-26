@@ -14,7 +14,7 @@ public class Mnemotecnico_model {
 
         String query = "SELECT \n"
                 + "mg.id_mge,mg.id_tca,tc.nombre,mg.mnemotecnico,mg.label,mg.valor_default,e.id_m,e.id_p,p.posicion_x,posicion_y,\n"
-                + "e.id_e  \n"
+                + "e.id_e, mg.valor_query, emge.id_co  \n"
                 + "FROM \n"
                 + "mnemotecnico_generico mg, tipo_campo tc, elemento_mge emge, elemento e, posicion p\n"
                 + "WHERE \n"
@@ -27,14 +27,15 @@ public class Mnemotecnico_model {
     }
 
     public boolean insert(String id_tca, String mnemotecnico, String label, String valor_default, String posx, String posy,
-            String id_m, String controles_1, String controles_2, String controles_3) {
+            String id_m, String controles_1, String controles_2, String controles_3,String id_co, String valor_query) {
         boolean flag = true;
         int num_afectados;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         try {
             num_afectados = jdbcTemplate.update(
-                    "CALL alta_mnemotecnico(?,?,?,?,?,?,?,?,?,?)",
-                    id_tca, mnemotecnico, label, valor_default, posx, posy, id_m, controles_1, controles_2, controles_3
+                    "CALL alta_mnemotecnico(?,?,?,?,?,?,?,?,?,?,?,?)",
+                    id_tca, mnemotecnico, label, valor_default, posx, posy, id_m, controles_1, controles_2, controles_3,id_co,
+                    valor_query
             );
             System.out.println("Numero de filas afectadas = " + num_afectados);
         } catch (DataAccessException e) {
@@ -48,15 +49,15 @@ public class Mnemotecnico_model {
     
     public boolean update(String id_tca, String mnemotecnico, String label, String valor_default, String posx, String posy,
             String id_m, String controles_1, String controles_2, String controles_3,
-            String id_e, String id_p, String id_mge) {
+            String id_e, String id_p, String id_mge,String id_co, String valor_query) {
         boolean flag = true;
         int num_afectados;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         try {
             num_afectados = jdbcTemplate.update(
-                    "CALL editar_mnemotecnico(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "CALL editar_mnemotecnico(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     id_tca, mnemotecnico, label, valor_default, posx, posy, id_m, controles_1, controles_2, controles_3,
-                    id_e,id_p,id_mge
+                    id_e,id_p,id_mge,id_co,valor_query
             );
             System.out.println("Numero de filas afectadas = " + num_afectados);
         } catch (DataAccessException e) {
