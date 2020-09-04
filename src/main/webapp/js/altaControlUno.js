@@ -34,8 +34,8 @@ function init () {
             { "data" : "color_2"},
             { "data" : "titulo"},
             { "data" : "descripcion"},
-            { "data" : "posicion_x"},
-            { "data" : "posicion_y"},
+            { "data" : "posicionx"},
+            { "data" : "posiciony"},
             { "data" : "formato"},
             { "data" : "tc"},
             { "data" : "url"},
@@ -149,8 +149,8 @@ $(document).on('click', '.btnEditar', function () {
     id_c = data['id_c'];
     id_p = data['id_p'];
     id_e = data['id_e'];
-    $('#posX').val(data['posicion_x']);
-    $('#posY').val(data['posicion_x']);
+    $('#posX').val(data['posicionx']);
+    $('#posY').val(data['posiciony']);
     $('#altura').val(data['altura']);
     $('#anchura').val(data['anchura']);
     $('#colorUno').val(data['color_1']);

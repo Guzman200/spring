@@ -13,8 +13,8 @@ public class ControlTres_model {
     public List<Map<String, Object>> select() {
 
         String query = "SELECT c3.id_g, c3.id_tg, m.id_m, ec3.id_e, ec3.id_co,\n"
-                + "	   m.nombre as modulo, c3.tipo, c3.altura, c3.anchura, c3.color_1, c3.color_2, c3.titulo, c3.descripcion,\n"
-                + "       p.posicion_x, p.posicion_y, tg.type, c.url, c3.seriex, c3.seriey,\n"
+                + "	   m.nombre as modulo, c3.tipo, c3.altura, c3.anchura, c3.color1, c3.color2, c3.titulo, c3.descripcion,\n"
+                + "       p.posicionx, p.posiciony, tg.type, c.url, c3.seriex, c3.seriey,\n"
                 + "       p.id_p\n"
                 + "FROM modulo m, elemento_controlTres ec3, elemento e, control_tres c3, posicion p, type_grafica tg, \n"
                 + "    conexion c\n"

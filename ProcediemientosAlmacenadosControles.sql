@@ -1,108 +1,3 @@
---
--- Estructura de tabla para la tabla `type_bd`
---
-
-CREATE TABLE `type_bd` (
-  `id_tbd` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  PRIMARY KEY (`id_tbd`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
---
--- Volcado de datos para la tabla `type_bd`
---
-
--- --------------------------------------------------------
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `type_card`
---
-
-CREATE TABLE `type_card` (
-  `id_tc` int(11) NOT NULL AUTO_INCREMENT,
-  `type` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  PRIMARY KEY (`id_tc`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
---
--- Volcado de datos para la tabla `type_card`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `type_grafica`
---
-
-CREATE TABLE `type_grafica` (
-  `id_tg` int(11) NOT NULL AUTO_INCREMENT,
-  `type` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  PRIMARY KEY (`id_tg`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `type_tabla`
---
-
-CREATE TABLE `type_tabla` (
-  `id_tt` int(11) NOT NULL AUTO_INCREMENT,
-  `type` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  PRIMARY KEY (`id_tt`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
-
--- Empieza la creacion de las tablas para los controles
-
-CREATE TABLE posicion(
-	id_p int(11) NOT NULL AUTO_INCREMENT,
-	posicion_x int (11) NOT NULL,
-	posicion_y int (11) NOT NULL,
-	PRIMARY KEY(id_p)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
-CREATE TABLE elemento(
-	id_e int(11) NOT NULL AUTO_INCREMENT,
-	id_m int (11) NOT NULL,
-	id_p int (11) NOT NULL, 
-	FOREIGN KEY (id_m) REFERENCES modulo(id_m),
-	FOREIGN KEY (id_p) REFERENCES posicion(id_p),
-	PRIMARY KEY(id_e)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
-CREATE TABLE control_uno(
-	id_c int(11) NOT NULL AUTO_INCREMENT,
-	tipo text COLLATE utf8mb4_spanish_ci NOT NULL,
-	altura int(11) NOT NULL,
-	anchura int(11) NOT NULL,
-	color_1 varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
-	color_2 varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
-	titulo text COLLATE utf8mb4_spanish_ci NOT NULL,
-	descripcion varchar(255) COLLATE utf8mb4_spanish_ci NOT NULL,
-	id_f int(11) NOT NULL,
-	FOREIGN KEY (id_f) REFERENCES formato(id_f),
-	id_tc int(11) NOT NULL,
-	FOREIGN KEY (id_tc) REFERENCES type_card(id_tc),
-	status int(11) NOT NULL,
-	PRIMARY KEY(id_c)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
-
-CREATE TABLE elemento_controlUno(
-	id_e int(11) NOT NULL ,
-	FOREIGN KEY(id_e) REFERENCES elemento(id_e),
-	id_c int(11) NOT NULL ,
-	FOREIGN  KEY(id_c) REFERENCES control_uno(id_c),
-	id_co int(11) NOT NULL,
-	FOREIGN KEY(id_co) REFERENCES conexion(id_co),
-	PRIMARY KEY (id_e, id_c, id_co)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- Query para mostrar los datos de controlUno en la vista
 
@@ -141,7 +36,6 @@ BEGIN
 END
 $$
 
-CALL insertControlUno(1,1,8,1,1,'120','120',440,440,'123','123','tipo pl','pl titulo','descr pl');
 
 -- PROCEDIMIENTO ALMACENADO PARE EDITAR ALTA CONTROL 1
 
@@ -171,7 +65,7 @@ $$
 
 CALL insertControlUno(1,1,8,1,1,'120','120',440,440,'123','123','tipo pl','pl titulo','descr pl',1,);
 
--- CONTROL 2 ---------------------------------------
+-------------------------------------- CONTROL 2 ---------------------------------------
 
 CREATE TABLE control_dos(
 	id_t int(11) NOT NULL AUTO_INCREMENT,
@@ -266,7 +160,7 @@ $$
 
 
 
---------------------------- CONTROL 3 ---------------------------------------
+------------------------------------------- CONTROL 3 ---------------------------------------
 
 CREATE TABLE control_tres(
 	id_g int(11) NOT NULL AUTO_INCREMENT,
@@ -664,9 +558,3 @@ BEGIN
 	END LOOP;
 	
 END $$
-
-
-
--- agregar en mnemotecnico columna valor_query *
-
--- elemento_mge añadir id de conexion *

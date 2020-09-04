@@ -13,7 +13,7 @@ public class Mnemotecnico_model {
     public List<Map<String, Object>> select() {
 
         String query = "SELECT \n"
-                + "mg.id_mge,mg.id_tca,tc.nombre,mg.mnemotecnico,mg.label,mg.valor_default,e.id_m,e.id_p,p.posicion_x,posicion_y,\n"
+                + "mg.id_mge,mg.id_tca,tc.nombre,mg.mnemotecnico,mg.label,mg.valor_default,e.id_m,e.id_p,p.posicionx,posiciony,\n"
                 + "e.id_e, mg.valor_query, emge.id_co  \n"
                 + "FROM \n"
                 + "mnemotecnico_generico mg, tipo_campo tc, elemento_mge emge, elemento e, posicion p\n"

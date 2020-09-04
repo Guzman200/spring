@@ -41,8 +41,8 @@ function init() {
             {"data": "valor_default"},
             {"data": "id_m"},
             {"data": "id_p"},
-            {"data": "posicion_x"},
-            {"data": "posicion_y"},
+            {"data": "posicionx"},
+            {"data": "posiciony"},
             {"data": "id_e"},
             {"data": "valor_query"},
             {"data": "id_co"},
@@ -458,8 +458,8 @@ $(document).on('click', '.btnEditar', function () {
     $("#label").val(data['label']);
     $("#mnemotecnico").val(data['mnemotecnico']);
     $("#valor_default").val(data['valor_default']);
-    $("#posX").val(data['posicion_x']);
-    $("#posY").val(data['posicion_y']);
+    $("#posX").val(data['posicionx']);
+    $("#posY").val(data['posiciony']);
     $("#modalAgregarMnemotecnicol").modal("show");
 
     // Cargo en la table los controles 1

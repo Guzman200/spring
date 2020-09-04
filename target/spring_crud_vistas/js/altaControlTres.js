@@ -28,12 +28,12 @@ function init () {
             { "data" : "tipo"},
             { "data" : "altura"},
             { "data" : "anchura"},
-            { "data" : "color_1"},
-            { "data" : "color_2"},
+            { "data" : "color1"},
+            { "data" : "color2"},
             { "data" : "titulo"},
             { "data" : "descripcion"},
-            { "data" : "posicion_x"},
-            { "data" : "posicion_y"},
+            { "data" : "posicionx"},
+            { "data" : "posiciony"},
             { "data" : "type"},
             { "data" : "url"},    
             { "data" : "seriex"},
@@ -135,12 +135,12 @@ $(document).on('click', '.btnEditar', function () {
     id_g = data['id_g'];
     id_p = data['id_p'];
     id_e = data['id_e'];
-    $('#posX').val(data['posicion_x']);
-    $('#posY').val(data['posicion_x']);
+    $('#posX').val(data['posicionx']);
+    $('#posY').val(data['posiciony']);
     $('#altura').val(data['altura']);
     $('#anchura').val(data['anchura']);
-    $('#colorUno').val(data['color_1']);
-    $('#colorDos').val(data['color_2']);
+    $('#colorUno').val(data['color1']);
+    $('#colorDos').val(data['color2']);
     $('#tipo').val(data['tipo']);
     $('#titulo').val(data['titulo']);
     $('#descripcion').val(data['descripcion']);

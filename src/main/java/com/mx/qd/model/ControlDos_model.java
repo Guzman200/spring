@@ -14,8 +14,8 @@ public class ControlDos_model {
     public List<Map<String,Object>> select() {
         
         String query = "SELECT c2.id_t, c2.id_tt, m.id_m, ec2.id_e, ec2.id_co,\n" +
-                        "	   m.nombre as modulo, c2.tipo, c2.altura, c2.anchura, c2.color_1, c2.color_2, c2.titulo, c2.descripcion,\n" +
-                        "       p.posicion_x, p.posicion_y, tt.type, c.url, c2.encabezados,\n" +
+                        "	   m.nombre as modulo, c2.tipo, c2.altura, c2.anchura, c2.color1, c2.color2, c2.titulo, c2.descripcion,\n" +
+                        "       p.posicionx, p.posiciony, tt.type, c.url, c2.encabezados,\n" +
                         "       p.id_p\n" +
                         "FROM modulo m, elemento_controlDos ec2, elemento e, control_dos c2, posicion p, type_tabla tt, \n" +
                         "    conexion c\n" +

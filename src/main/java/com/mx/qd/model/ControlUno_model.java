@@ -15,7 +15,7 @@ public class ControlUno_model {
         
         String query = "SELECT c1.id_c, c1.id_tc, m.id_m,c1.id_f, ec1.id_e, ec1.id_co,\n" +
                             "	   m.nombre as modulo, c1.tipo, c1.altura, c1.anchura, c1.color_1, c1.color_2, c1.titulo, c1.descripcion,\n" +
-                            "       p.posicion_x, p.posicion_y, f.nombre as formato, tc.type as tc, c.url,\n" +
+                            "       p.posicionx, p.posiciony, f.nombre as formato, tc.type as tc, c.url,\n" +
                             "       p.id_p\n" +
                             "FROM modulo m, elemento_controlUno ec1, elemento e, control_uno c1, posicion p, formato f, type_card tc, \n" +
                             "    conexion c\n" +
