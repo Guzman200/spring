@@ -30,7 +30,7 @@ BEGIN
 
 	select @idElemento := LAST_INSERT_ID();
 
-	INSERT INTO control_uno (tipo,altura,anchura,color_1,color_2,titulo,descripcion,id_f,id_tc,status) 
+	INSERT INTO control_uno (tipo,altura,anchura,color1,color2,titulo,descripcion,id_f,id_tc,status) 
 	                 VALUES (tipo,altura,anchura,colorUno,colorDos,titulo,descr,id_f,id_tc,1);
 	INSERT INTO elemento_controlUno (id_e,id_c,id_co) VALUES (@idElemento,LAST_INSERT_ID(),id_co);
 END
@@ -56,7 +56,7 @@ BEGIN
 	UPDATE elemento set id_m = id_m_ WHERE id_e = id_e_ ;
 
 	UPDATE control_uno set tipo = tipo_ ,altura = altura_ ,anchura = anchura_,
-	                      color_1 = colorUno,color_2 = colorDos,titulo=titulo_,
+	                      color1 = colorUno,color2 = colorDos,titulo=titulo_,
 	                      descripcion = descr, id_f = id_f_ , id_tc = id_tc_ WHERE id_c = id_c_;
 
 	UPDATE elemento_controlUno set id_co = id_co_  WHERE id_c = id_c_ and id_e = id_e_;
