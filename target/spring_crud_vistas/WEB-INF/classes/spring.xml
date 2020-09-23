@@ -56,6 +56,26 @@
              <bean id="Mnemotecnico_model" class="com.mx.qd.model.Mnemotecnico_model">
                  <property name="dataSource" ref="dataSource"></property>
              </bean>
+             
+             <bean id="Acceso_model" class="com.mx.qd.model.Acceso_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="Usuario_model" class="com.mx.qd.model.Usuario_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="Perfil_model" class="com.mx.qd.model.Perfil_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="Modulo_sistema_model" class="com.mx.qd.model.Modulo_sistema_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
+             
+             <bean id="Permiso_model" class="com.mx.qd.model.Permiso_model">
+                 <property name="dataSource" ref="dataSource"></property>
+             </bean>
                                            	                     
 	<bean id="dataSource" class="${jdbc.dataSourceOracle}">  
                 <property name="driverClassName" value="${jdbc.driverClassNameOracle}" />  

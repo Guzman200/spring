@@ -666,7 +666,72 @@ BEGIN
 END $$
 
 
+-- TABLA PERFIL
+CREATE TABLE perfil(
 
--- agregar en mnemotecnico columna valor_query *
+	id_pe int NOT NULL AUTO_INCREMENT,
+	nombre text COLLATE utf8mb4_spanish_ci NOT NULL,
+	status int not null,
+	PRIMARY KEY (id_pe)
 
--- elemento_mge añadir id de conexion *
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+
+-- TABLA USUARIO
+
+CREATE TABLE usuario (
+
+	id_u int NOT NULL AUTO_INCREMENT,
+	login text COLLATE utf8mb4_spanish_ci NOT NULL,
+	password text COLLATE utf8mb4_spanish_ci NOT NULL,
+	id_pe int NOT NULL,
+	FOREIGN KEY (id_pe) REFERENCES perfil(id_pe),
+	PRIMARY KEY (id_u)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- TABLA MODULO
+CREATE TABLE modulo_sistema(
+
+	id_mo int NOT NULL AUTO_INCREMENT,
+	nombre text COLLATE utf8mb4_spanish_ci NOT NULL,
+	descripcion text COLLATE utf8mb4_spanish_ci NOT NULL,
+	status int not null,
+	PRIMARY KEY (id_mo)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- TABLA PERMISO
+CREATE TABLE permiso(
+
+	id_p int NOT NULL AUTO_INCREMENT,
+	nombre text COLLATE utf8mb4_spanish_ci NOT NULL,
+	descripcion text COLLATE utf8mb4_spanish_ci NOT NULL,
+	status int not null,
+	PRIMARY KEY (id_p)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- TABLA PERMISO_MODULOS
+CREATE TABLE permiso_modulo(
+
+	id_pm int NOT NULL AUTO_INCREMENT,
+	id_mo int NOT NULL,
+	id_p int NOT NULL,
+	FOREIGN KEY (id_mo) REFERENCES modulo(id_mo),
+	FOREIGN KEY (id_p) REFERENCES permiso (id_p),
+	PRIMARY KEY (id_pm)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- TABLA DETALLE_PERFIL
+CREATE TABLE detalle_perfil(
+
+	id_dp int NOT NULL AUTO_INCREMENT,
+	id_mo int NOT NULL,
+	id_pe int NOT NULL,
+	FOREIGN KEY (id_mo) REFERENCES modulo(id_mo),
+	FOREIGN KEY (id_pe) REFERENCES permiso (id_pe),
+	PRIMARY KEY (id_dp)
+
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
