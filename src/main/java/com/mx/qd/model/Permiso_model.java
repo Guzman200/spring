@@ -7,8 +7,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class Permiso_model {
-    
-     private DataSource dataSource;
+
+    private DataSource dataSource;
 
     public List<Map<String, Object>> select() {
 
@@ -18,42 +18,38 @@ public class Permiso_model {
 
         return empRows;
     }
-    
-    public boolean insert(String nombre,String descripcion){
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        boolean flag=true;
-        int num_afectados=0;
-        try
-        {
-            num_afectados=jdbcTemplate.update(
-                        "INSERT INTO permiso ( nombre,status,descripcion ) VALUES (?,1,?)", 
-                        nombre, descripcion
-            );
-            System.out.println("Numero de filas afectadas = " +num_afectados);
-        }catch (DataAccessException e)
-        {
-            System.out.println("Se genero un error");
-            System.out.println(e.getMessage());
-            flag=false;
-        }
-        return flag;
-    }
-    
-    public boolean update(String id, String nombre, String descripcion){
+
+    public boolean insert(String nombre, String descripcion) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         boolean flag = true;
-         try
-        {
-           jdbcTemplate.update("UPDATE permiso SET nombre = ?, descripcion = ? WHERE id_p = ?", nombre, descripcion,id);
-        }catch (DataAccessException e)
-        {
-            flag=false;
+        int num_afectados = 0;
+        try {
+            num_afectados = jdbcTemplate.update(
+                    "INSERT INTO permiso (nombre,status,descripcion ) VALUES (?,1,?)",
+                    nombre, descripcion
+            );
+            System.out.println("Numero de filas afectadas = " + num_afectados);
+        } catch (DataAccessException e) {
+            System.out.println("Se genero un error");
+            System.out.println(e.getMessage());
+            flag = false;
         }
-        
         return flag;
     }
-    
-    public boolean delete(String id){
+
+    public boolean update(String id, String nombre, String descripcion) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        boolean flag = true;
+        try {
+            jdbcTemplate.update("UPDATE permiso SET nombre = ?, descripcion = ? WHERE id_p = ?", nombre, descripcion, id);
+        } catch (DataAccessException e) {
+            flag = false;
+        }
+
+        return flag;
+    }
+
+    public boolean delete(String id) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         boolean flag = true;
         try {
@@ -62,6 +58,19 @@ public class Permiso_model {
             flag = false;
         }
         return flag;
+    }
+
+    /* Retorna todos los permiso que aun no tiene un modulo */
+    public List<Map<String, Object>> select_pemisos_disponibles_modulo(String id_mo) {
+
+        String query = "SELECT *\n"
+                + "FROM permiso \n"
+                + "WHERE status = 1 and id_p not in (\n"
+                + "SELECT id_p FROM permiso_modulo WHERE status = 1 and id_mo = ?)";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        List<Map<String, Object>> empRows = jdbcTemplate.queryForList(query,id_mo);
+
+        return empRows;
     }
 
     public DataSource getDataSource() {

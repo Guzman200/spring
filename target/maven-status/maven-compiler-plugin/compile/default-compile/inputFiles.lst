@@ -2,6 +2,7 @@ C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\model\ControlDos_model.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\controller\ControlUno_controller.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\model\TipoCampo_model.java
+C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\controller\PermisoModulo_controller.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\controller\Formato_controller.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\model\TypeBd_model.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\model\Conexion_model.java
@@ -30,5 +31,6 @@ C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\controller\TypeCard_controller.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\controller\TypeTabla_controller.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\controller\TypeGrafica_controller.java
+C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\model\PermisoModulo_model.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\model\TypeTabla_model.java
 C:\Users\GUZMAN\Documents\NetBeansProjects\spring_crud_vistas\src\main\java\com\mx\qd\model\Permiso_model.java

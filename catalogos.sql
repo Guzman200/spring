@@ -685,10 +685,15 @@ CREATE TABLE usuario (
 	login text COLLATE utf8mb4_spanish_ci NOT NULL,
 	password text COLLATE utf8mb4_spanish_ci NOT NULL,
 	id_pe int NOT NULL,
+	status int NOT NULL,
 	FOREIGN KEY (id_pe) REFERENCES perfil(id_pe),
 	PRIMARY KEY (id_u)
 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+INSERT INTO usuario (login, password,id_pe, status) VALUES 
+('login1', MD5('1234'),1,1),
+('login2', MD5('1234'),1,1)
 
 -- TABLA MODULO
 CREATE TABLE modulo_sistema(
@@ -713,14 +718,15 @@ CREATE TABLE permiso(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- TABLA PERMISO_MODULOS
-CREATE TABLE permiso_modulo(
+CREATE OR RAPLACE TABLE permiso_modulo(
 
-	id_pm int NOT NULL AUTO_INCREMENT,
+	id_pm int NOT NULL,
 	id_mo int NOT NULL,
 	id_p int NOT NULL,
-	FOREIGN KEY (id_mo) REFERENCES modulo(id_mo),
+	status int NOT NULL,
+	FOREIGN KEY (id_mo) REFERENCES modulo_sistema(id_mo),
 	FOREIGN KEY (id_p) REFERENCES permiso (id_p),
-	PRIMARY KEY (id_pm)
+	PRIMARY KEY (id_pm, id_mo)
 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -730,8 +736,42 @@ CREATE TABLE detalle_perfil(
 	id_dp int NOT NULL AUTO_INCREMENT,
 	id_mo int NOT NULL,
 	id_pe int NOT NULL,
-	FOREIGN KEY (id_mo) REFERENCES modulo(id_mo),
+	FOREIGN KEY (id_mo) REFERENCES modulo_sistema(id_mo),
 	FOREIGN KEY (id_pe) REFERENCES permiso (id_pe),
 	PRIMARY KEY (id_dp)
 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+-- CONSULTA PARA OBTENER TODOS LOS PERMISOS QUE NO TIENE UN MODULO
+SELECT *
+FROM permiso 
+WHERE status = 1 and not in (
+
+SELECT id_p FROM permiso_modulo WHERE status = 1 and id_mo = ?)
+
+-- STORED PARA INSERTAR EN LA TABLA PERMISO_MODULO
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS insertPermisoModulo $$
+CREATE PROCEDURE insertPermisoModulo(
+	IN _id_mo int, 
+	IN _id_p int
+)
+
+BEGIN
+	
+	DECLARE _id_pm INT DEFAULT NULL;
+
+	-- CALCULAMOS EL id_pm mas maximo para el modulo
+	SELECT MAX(id_pm) as id_pm INTO _id_pm FROM permiso_modulo WHERE id_mo = _id_mo;
+
+	IF _id_pm IS NULL THEN
+		INSERT INTO permiso_modulo (id_pm, id_mo,id_p,status) VALUES (1,_id_mo,_id_p,1);
+	ELSE
+		SET _id_pm = _id_pm + 1;
+		INSERT INTO permiso_modulo (id_pm, id_mo,id_p,status) VALUES (_id_pm,_id_mo,_id_p,1);
+	END IF;
+END
+$$
+
+CALL insertPermisoModulo(1,4)

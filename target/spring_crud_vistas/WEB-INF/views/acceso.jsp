@@ -163,7 +163,7 @@
                                     <input type="text" class="form-control" id="nombreModulo"
                                            placeholder="Nombre" required>
                                 </div>
-                                
+
                                 <!-- ENTRADA PARA LA DESCRIPCION DEL MODULO -->
                                 <div class="input-group pt-3">
                                     <div class="input-group-prepend">
@@ -254,7 +254,7 @@
                                     <input type="text" class="form-control" id="nombrePermiso"
                                            placeholder="Nombre" required>
                                 </div>
-                                
+
                                 <!-- ENTRADA PARA LA DESCRIPCION DEL PERMISO -->
                                 <div class="input-group pt-3">
                                     <div class="input-group-prepend">
@@ -283,8 +283,202 @@
                 </div>
                 <!-- /.col -->
 
+                <div class="col-6 col-md-6">
+
+                    <div class="card collapse" id="collapseTablaUsuario">
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <!-- TABLA USUARISO -->
+                            <table id="tablaUsuario" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Login</th>
+                                        <th>Password</th>
+                                        <th>Id perfil</th>
+                                        <th>Perfil</th>
+                                        <th>Status</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                </tbody>
+
+                            </table>
+                            <!-- /. TABLA MODULO -->
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+
+                            <button id="btnNuevoUsuario" class="btn btn-primary" data-toggle="collapse" data-target="#collapseTablaUsuario">
+                                Nuevo usuario
+                            </button> 
+
+                        </div>
+
+                    </div>
+                    <!-- /.card -->
+
+                    <div class="card collapse" id="collapseFormularioUsuario">
+                        <form id="formAddUsuario">
+                            <div class="card-header">
+                                <h2 id="tituloModalUsuario" class="badge badge-primary">Creación de usuario</h2>
+                            </div>
+
+                            <div class="card-body">
+
+                                <!-- ENTRADA PARA EL LOGIN -->
+                                <div class="input-group pt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" id="loginUsuario"
+                                           placeholder="Login" required>
+                                </div>
+
+                                <!-- ENTRADA PARA LA PASSWORD -->
+                                <div class="input-group pt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                    <input type="password" class="form-control" id="passwordUsuario"
+                                           placeholder="Password" required>
+                                </div>
+
+                                <!-- ENTRADA PARA EL TIPO DE PERFIL -->
+                                <div class="input-group pt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fab fa-cuttlefish"></i>
+                                        </span>
+                                    </div>
+                                    <select class="form-control" name="tipoTarjeta" id="selectPerfil">
+                                        <option value="default" >Seleccione un tipo de perfil</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer">
+                                <button id="btnFormCancelarUsuario" class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseFormularioUsuario">
+                                    Cancelar
+                                </button> 
+                                <button id="btnFormAddUsuario" type="submit" class="btn btn-primary">
+                                    Guardar usuario
+                                </button> 
+                            </div>
+                        </form>
+
+                    </div> 
+
+                </div>
+
             </div>
             <!-- /.row -->
+
+            <div class="row mt-3">
+
+                <div class="col-6 col-md-6">
+
+                    <div class="card collapse" id="collapseTablaPermisoModulo">
+
+                        <!-- /.card-header -->
+                        <div class="card-body">
+
+                            <!-- TABLA PERMISO MODULO -->
+                            <table id="tablaPermisoModulo" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nombre modulo</th>
+                                        <th>Id modulo</th>
+                                        <th>Nombre permiso</th>
+                                        <th>Id permiso</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                </tbody>
+
+                            </table>
+                            <!-- /. TABLA PERMISO MODULO -->
+
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+
+                            <button id="btnNuevoPermisoModulo" class="btn btn-primary" data-toggle="collapse" data-target="#collapseTablaPermisoModulo">
+                                Nuevo permiso modulo
+                            </button> 
+
+                        </div>
+
+                    </div>
+                    <!-- /.card -->
+
+                    <div class="card collapse" id="collapseFormularioPermisoModulo">
+                        <form id="formAddPermisoModulo">
+                            <div class="card-header">
+                                <h2 id="tituloModalPermisoModulo" class="badge badge-primary">Creación de permiso modulo</h2>
+                            </div>
+
+                            <div class="card-body">
+
+                                <!-- ENTRADA PARA EL MODULO -->
+                                <div class="input-group pt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                    <select class="form-control" id="selectModulo_pm">
+                                        <option value="default" >Selecciona un modulo</option>
+                                    </select>
+                                </div>
+
+                                <!-- ENTRADA PARA EL PERMISO -->
+                                <div class="input-group pt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                    <select class="form-control" id="selectPermiso_pm">
+                                        <option value="default" >Selecciona un permiso</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="card-footer">
+                                <button id="btnFormCancelarPermisoModulo" class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseFormularioPermisoModulo">
+                                    Cancelar
+                                </button> 
+                                <button id="btnFormAddPermisoModulo" type="submit" class="btn btn-primary">
+                                    Guardar permiso modulo
+                                </button> 
+                            </div>
+                        </form>
+
+                    </div> 
+
+                </div>
+                <!-- /.col -->
+
+            </div>
         </div>
 
 

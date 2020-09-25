@@ -12,61 +12,73 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class Permiso_controller {
-    
-    @RequestMapping (value = "select_permiso.do", method = RequestMethod.GET)
+
+    @RequestMapping(value = "select_permiso.do", method = RequestMethod.GET)
     @ResponseBody
-    public String select(){
-        
+    public String select() {
+
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         Permiso_model permiso = (Permiso_model) ctx.getBean("Permiso_model");
-        
+
         JSONObject retorno = new JSONObject();
         retorno.put("data", permiso.select());
-        
+
         return retorno.toString();
     }
-    
+
     @RequestMapping(value = "add_permiso.do", method = RequestMethod.POST)
     @ResponseBody
-    public String insert(@RequestParam() String nombre, @RequestParam() String descripcion){
-         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+    public String insert(@RequestParam() String nombre, @RequestParam() String descripcion) {
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         Permiso_model permiso = (Permiso_model) ctx.getBean("Permiso_model");
         String retorno = "OK";
-        
-        if(!permiso.insert(nombre, descripcion))
-        {
+
+        if (!permiso.insert(nombre, descripcion)) {
             retorno = "Error al ingresar registro";
         }
-        
-        return retorno; 
-        
+
+        return retorno;
+
     }
-    
+
     @RequestMapping(value = "update_permiso.do", method = RequestMethod.POST)
     @ResponseBody
-    public String update(String id, String nombre, @RequestParam() String descripcion){
+    public String update(String id, String nombre, @RequestParam() String descripcion) {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         Permiso_model permiso = (Permiso_model) ctx.getBean("Permiso_model");
         String retorno = "OK";
-        if(!permiso.update(id, nombre, descripcion)){
+        if (!permiso.update(id, nombre, descripcion)) {
             retorno = "Error al modificar";
         }
-        
+
         return retorno;
     }
-    
+
     @RequestMapping(value = "delete_permiso.do", method = RequestMethod.POST)
     @ResponseBody
-    public String delete(String id){
+    public String delete(String id) {
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         Permiso_model permiso = (Permiso_model) ctx.getBean("Permiso_model");
         String retorno = "OK";
-        
-        if(!permiso.delete(id)){
+
+        if (!permiso.delete(id)) {
             retorno = "Error al eliminar";
         }
-        
+
         return retorno;
     }
-    
+
+    @RequestMapping(value = "select_pemisos_disponibles_modulo.do", method = RequestMethod.GET)
+    @ResponseBody
+    public String select_pemisos_disponibles_modulo(@RequestParam() String id_mo) {
+
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        Permiso_model permiso = (Permiso_model) ctx.getBean("Permiso_model");
+
+        JSONObject retorno = new JSONObject();
+        retorno.put("data", permiso.select_pemisos_disponibles_modulo(id_mo));
+
+        return retorno.toString();
+    }
+
 }
