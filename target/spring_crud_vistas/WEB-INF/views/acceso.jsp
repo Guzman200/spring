@@ -448,6 +448,11 @@
                                         <option value="default" >Selecciona un modulo</option>
                                     </select>
                                 </div>
+                                
+                                <!-- SALIDA PARA LA DESCRIPCION DEL MODULO -->
+                                <div class=" pt-3">
+                                    <label id="descripcionModuloLabel" class=""></label>
+                                </div>
 
                                 <!-- ENTRADA PARA EL PERMISO -->
                                 <div class="input-group pt-3">
@@ -460,6 +465,11 @@
                                         <option value="default" >Selecciona un permiso</option>
                                     </select>
                                 </div>
+                                
+                                <!-- SALIDA PARA LA DESCRIPCION DEL PERMISO -->
+                                <div class="input-group pt-3">
+                                    <label id="descripcionPermisoLabel" class=""></label>
+                                </div>
 
                             </div>
 
@@ -469,6 +479,100 @@
                                 </button> 
                                 <button id="btnFormAddPermisoModulo" type="submit" class="btn btn-primary">
                                     Guardar permiso modulo
+                                </button> 
+                            </div>
+                        </form>
+
+                    </div> 
+
+                </div>
+                <!-- /.col -->
+
+                <div class="col-6 col-md-6">
+
+                    <div class="card " id="collapseFormularioConfiPerfil">
+                        <form id="formGuardarPermisos">
+                            <div class="card-header">
+                                <h2 id="tituloModalConfiPerfil" class="badge badge-primary">Configuración de perfil</h2>
+                            </div>
+
+                            <div class="card-body">
+
+                                <!-- ENTRADA PARA EL PERFIL -->
+                                <div class="input-group pt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                    <select class="form-control" id="selectConfigPerfil">
+                                        <option value="default" >Selecciona un perfil</option>
+                                    </select>
+                                </div>
+
+                                <!-- ENTRADA PARA EL MODULO -->
+                                <div class="input-group pt-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="fas fa-user"></i>
+                                        </span>
+                                    </div>
+                                    <select class="form-control" id="selectConfigModulo">
+                                        <option value="default" >Selecciona un modulo</option>
+                                    </select>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-9 col-md-9">
+                                        <!-- ENTRADA PARA EL PERMISO -->
+                                        <div class="input-group pt-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-user"></i>
+                                                </span>
+                                            </div>
+                                            <select class="form-control" id="selectConfigPermiso">
+                                                <option value="default" >Selecciona un permiso</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 col-md-3">
+                                        <div class="pt-3">
+                                            <button type="button" id="btnAddPermiso" class="btn btn-primary btn-sm form-control">Agregar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row pt-4">
+                                    <div class="col-12 col-md-12">
+                                        <div style="overflow: scroll; height: 200px">
+                                            <table id="tablaPermisosPerfil" class="table table-striped table-bordered table-sm" >
+                                                <thead>
+                                                    <tr>
+                                                        <th>Modulo</th>
+                                                        <th>Permiso</th>
+                                                        <th>Eliminar</th>
+                                                    </tr>
+                                                <tbody>
+                                                </tbody>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+                            </div>
+
+                            <div class="card-footer">
+                                <button id="btnFormCancelarPermisoModulo" class="btn btn-light" type="button" data-toggle="collapse" data-target="#collapseFormularioPermisoModulo">
+                                    Cancelar
+                                </button> 
+                                <button type="submit" class="btn btn-primary">
+                                    Guardar Cambios
                                 </button> 
                             </div>
                         </form>

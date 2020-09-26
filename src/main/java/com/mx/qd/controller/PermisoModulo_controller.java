@@ -75,5 +75,19 @@ public class PermisoModulo_controller {
         
     }
     
+    @RequestMapping(value = "select_permisos_modulo.do", method = RequestMethod.GET)
+    @ResponseBody
+    public String select_permisos_modulo(@RequestParam(required = true) String id_mo){
+        
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        PermisoModulo_model pm = (PermisoModulo_model) ctx.getBean("PermisoModulo_model");
+        
+        JSONObject retorno = new JSONObject();
+        retorno.put("data", pm.select_permisos_modulo(id_mo));
+        
+        return retorno.toString();
+        
+    }
+    
     
 }

@@ -68,6 +68,33 @@ public class Perfil_controller {
         return retorno;
     }
     
+    @RequestMapping (value = "select_permisos_perfil.do", method = RequestMethod.GET)
+    @ResponseBody
+    public String select_permisos_perfil(@RequestParam(required = true) String id_pe){
+        
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        Perfil_model perfil = (Perfil_model) ctx.getBean("Perfil_model");
+        
+        JSONObject retorno = new JSONObject();
+        retorno.put("data", perfil.select_permisos_perfil(id_pe));
+        
+        return retorno.toString();
+    }
+    
+    @RequestMapping(value = "modificar_permisos_perfil.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String modificar_permisos_perfil(String id_pe, String cadena_permisos){
+        ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
+        Perfil_model perfil = (Perfil_model) ctx.getBean("Perfil_model");
+        String retorno = "OK";
+        
+        if(!perfil.modificar_permisos_perfil(id_pe, cadena_permisos)){
+            retorno = "Error al modificar los permisos";
+        }
+        
+        return retorno;
+    }
+    
     
     
 }

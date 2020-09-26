@@ -370,7 +370,7 @@ btnAddControl1.addEventListener('click', () => {
                     <td>${selectControl1.options[selectControl1.selectedIndex].text}</td>
                 </tr>
             `);
-            console.log(controles1);
+            
         }
     }
 });

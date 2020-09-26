@@ -39,9 +39,8 @@ public class PermisoModulo_model {
         boolean flag = true;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
-        
         try {
-            jdbcTemplate.update("UPDATE  permiso_modulo SET id_p = ? WHERE id_pm = ? and id_mo = ?",id_p,id_pm,id_mo);
+            jdbcTemplate.update("UPDATE  permiso_modulo SET id_p = ? WHERE id_pm = ? and id_mo = ?", id_p, id_pm, id_mo);
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
             flag = false;
@@ -50,19 +49,34 @@ public class PermisoModulo_model {
         return flag;
     }
 
-    public boolean delete(String id_pm,String id_mo) {
+    public boolean delete(String id_pm, String id_mo) {
         boolean flag = true;
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         try {
             jdbcTemplate.update("UPDATE  permiso_modulo SET status = 0 WHERE id_pm = ? and id_mo = ?",
-                    id_pm,id_mo);
+                    id_pm, id_mo);
         } catch (DataAccessException e) {
             System.out.println(e.getMessage());
             flag = false;
         }
 
         return flag;
+    }
+
+    // Todos los permisos a los que tiene acceso un modulo
+    public List<Map<String, Object>> select_permisos_modulo(String id_mo) {
+
+        String query = "SELECT pm.id_pm, pm.id_mo,pm.id_p ,p.nombre\n"
+                + "FROM permiso p, permiso_modulo pm\n"
+                + "WHERE p.id_p = pm.id_p -- enlazamos con la tabla permiso\n"
+                + "      and p.status = 1\n"
+                + "      and pm.status = 1\n"
+                + "	  and pm.id_mo = ?";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        List<Map<String, Object>> empRows = jdbcTemplate.queryForList(query,id_mo);
+
+        return empRows;
     }
 
     public DataSource getDataSource() {

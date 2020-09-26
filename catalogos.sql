@@ -731,14 +731,17 @@ CREATE OR RAPLACE TABLE permiso_modulo(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- TABLA DETALLE_PERFIL
-CREATE TABLE detalle_perfil(
+CREATE OR REPLACE TABLE detalle_perfil(
 
-	id_dp int NOT NULL AUTO_INCREMENT,
-	id_mo int NOT NULL,
+	id_dp int NOT NULL,
 	id_pe int NOT NULL,
-	FOREIGN KEY (id_mo) REFERENCES modulo_sistema(id_mo),
-	FOREIGN KEY (id_pe) REFERENCES permiso (id_pe),
-	PRIMARY KEY (id_dp)
+	id_pm int NOT NULL,
+	id_mo int NOT NULL,
+	
+	FOREIGN KEY (id_pm,id_mo) REFERENCES permiso_modulo(id_pm,id_mo),
+	
+	FOREIGN KEY (id_pe) REFERENCES perfil (id_pe),
+	PRIMARY KEY (id_dp,id_pe)
 
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -762,16 +765,120 @@ BEGIN
 	
 	DECLARE _id_pm INT DEFAULT NULL;
 
-	-- CALCULAMOS EL id_pm mas maximo para el modulo
-	SELECT MAX(id_pm) as id_pm INTO _id_pm FROM permiso_modulo WHERE id_mo = _id_mo;
+	-- Verificamos si el permiso para el modulo ya esta insertado
+	SELECT id_pm INTO _id_pm FROM permiso_modulo WHERE id_mo = _id_mo and id_p = _id_p;
 
 	IF _id_pm IS NULL THEN
-		INSERT INTO permiso_modulo (id_pm, id_mo,id_p,status) VALUES (1,_id_mo,_id_p,1);
+		-- CALCULAMOS EL id_pm mas maximo para el modulo
+		SELECT MAX(id_pm) as id_pm INTO _id_pm FROM permiso_modulo WHERE id_mo = _id_mo;
+
+		IF _id_pm IS NULL THEN
+			INSERT INTO permiso_modulo (id_pm, id_mo,id_p,status) VALUES (1,_id_mo,_id_p,1);
+		ELSE
+			SET _id_pm = _id_pm + 1;
+			INSERT INTO permiso_modulo (id_pm, id_mo,id_p,status) VALUES (_id_pm,_id_mo,_id_p,1);
+		END IF;
 	ELSE
-		SET _id_pm = _id_pm + 1;
-		INSERT INTO permiso_modulo (id_pm, id_mo,id_p,status) VALUES (_id_pm,_id_mo,_id_p,1);
+		UPDATE permiso_modulo SET status = 1 WHERE id_pm = _id_pm and id_mo = _id_mo;
 	END IF;
+
+	
 END
 $$
 
 CALL insertPermisoModulo(1,4)
+
+
+
+-- CONSULTA PARA TRER TODOS LOS MODULOS Y PERMISOS A LOS QUE TIENE ACCESO UN PERFIL
+SELECT dp.id_pm,
+	   dp.id_pe, p.nombre as nombrePerfil, 
+	   dp.id_mo, ms.nombre as nombreModulo,
+	   pm.id_p, permiso.nombre as nombrePermiso
+FROM detalle_perfil dp, permiso_modulo pm, perfil p, modulo_sistema ms, permiso
+WHERE dp.id_pm = pm.id_pm and dp.id_mo = pm.id_mo -- enlazamos con la tabla permiso_modulo
+	  and dp.id_pe = p.id_pe -- enlazamos con la tabla perfil
+	  and dp.id_mo = ms.id_mo -- enlazamos con la tabla modulo
+	  and permiso.id_p = pm.id_p -- enlazamos con la tabla permiso
+	  and pm.status = 1 --
+	  and dp.id_pe = ?
+
+
+-- CONSULTA PARA TRAER TODOS LOS PERMISOS A LOS QUE TIENE ACCESO UN MODULO
+SELECT pm.id_pm, pm.id_mo,pm.id_p ,p.nombre
+FROM permiso p, permiso_modulo pm
+WHERE p.id_p = pm.id_p -- enlazamos con la tabla permiso
+      and p.status = 1
+      and pm.status = 1
+	  and pm.id_mo = ?
+
+
+
+
+-- PROCEDIMIENTO PARA EDITAR LA CONFIGURACION DE UN PERFIL
+DELIMITER $$
+DROP PROCEDURE IF EXISTS config_perfil $$
+CREATE PROCEDURE config_perfil(IN _id_pe int,IN permisos text)
+BEGIN
+
+	DECLARE _next TEXT DEFAULT NULL;
+	DECLARE _nextlen INT DEFAULT NULL;
+	DECLARE _value TEXT DEFAULT NULL;
+
+	DECLARE _next_dos TEXT DEFAULT NULL;
+	DECLARE _nextlen_dos INT DEFAULT NULL;
+	DECLARE _value_dos TEXT DEFAULT NULL;
+
+	DECLARE _id_dp INT DEFAULT NULL;
+	DECLARE _id_pm INT DEFAULT NULL;
+	DECLARE _id_mo INT DEFAULT NULL;
+
+	DELETE FROM detalle_perfil WHERE id_pe = _id_pe;
+	
+	iterator:
+	LOOP
+
+	     IF LENGTH(TRIM(permisos)) = 0 OR permisos IS NULL THEN
+	       LEAVE iterator;
+	     END IF;
+
+     	-- 1,1-2,1-3,1 
+     	SET _next = SUBSTRING_INDEX(permisos,'-',1);
+     	SET _nextlen = LENGTH(_next);
+		SET _value = TRIM(_next);
+
+		/* --------------------------------------------------- */
+
+		    SET _next_dos = SUBSTRING_INDEX(_value,',',1);
+	     	SET _nextlen_dos = LENGTH(_next_dos);
+			SET _id_pm = TRIM(_next_dos); 
+
+			SET _value = INSERT(_value,1,_nextlen_dos + 1,'');
+
+			SET _next_dos = SUBSTRING_INDEX(_value,',',1);
+	     	SET _nextlen_dos = LENGTH(_next_dos);
+			SET _id_mo = TRIM(_next_dos);
+
+			SELECT MAX(id_dp) as id_dp INTO _id_dp FROM detalle_perfil WHERE id_mo = _id_mo 
+			and id_pe = _id_pe;
+
+			IF _id_dp IS NULL THEN
+				SET _id_dp =  1;
+			ELSE
+				SET _id_dp = _id_dp + 1;
+			END IF;
+
+			-- INSERTAMOS EL PERMISO EN LA TABLA DETALLE PERFIL
+			INSERT INTO detalle_perfil (id_dp, id_pe, id_pm, id_mo) 
+				VALUES (_id_dp,_id_pe,_id_pm,_id_mo);
+			
+		/* ------------------------------------------------------ */
+
+		SET permisos = INSERT(permisos,1,_nextlen + 1,'');
+
+	END LOOP;
+	
+END $$
+
+
+CALL config_perfil(2,'1,2-1,1');

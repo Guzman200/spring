@@ -46,6 +46,18 @@ var id_pm; // 1 -> insert, 2 -> update
 var opcion_pm;
 var selectModulo = document.getElementById("selectModulo_pm");
 var selectPermiso = document.getElementById("selectPermiso_pm");
+var descripcionModuloLabel = document.getElementById("descripcionModuloLabel");
+var descripcionPermisoLabel = document.getElementById("descripcionPermisoLabel");
+
+/* Variables para modulo configuracion de perfil */
+
+var selectConfigPerfil = document.getElementById("selectConfigPerfil");
+var selectConfigModulo = document.getElementById("selectConfigModulo");
+var selectConfigPermiso = document.getElementById("selectConfigPermiso");
+var tablaPermisosPerfil = document.getElementById("tablaPermisosPerfil");
+var btnAddPermiso = document.getElementById("btnAddPermiso");
+var formGuardarPermisos = document.getElementById("formGuardarPermisos");
+var permisosPerfil = [];
 
 /* Inicializamos la datatables */
 function init() {
@@ -115,24 +127,28 @@ function init() {
                 option.value = item.id_pe;
                 selectPerfil.appendChild(option);
             }
+
+            selectConfigPerfil.innerHTML = selectPerfil.innerHTML;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
         }
     });
 
-    // LLenamos e select de modulos
+    // LLenamos el select de modulos
     $.ajax({
-        "url": "select_modulo.do",
+        "url": "select_modulo_sistema.do",
         dataType: 'json',
         success: function (data, textStatus, jqXHR) {
 
             for (let item of data.data) {
                 let option = document.createElement("option");
                 option.text = item.nombre;
-                option.value = item.id_m;
+                option.value = item.id_mo;
+                option.setAttribute("data-descripcion", item.descripcion);
                 selectModulo.appendChild(option);
             }
+            selectConfigModulo.innerHTML = selectModulo.innerHTML;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -682,12 +698,12 @@ $(document).on('click', '.btnEditarPermisoModulo', function () {
     } else {
         var data = tablaPermisoModulo.row($(this).parents("tr")).data();
     }
-    
+
     btnNuevoPermisoModulo.click();
     llenarSelectPermisosDisponibles(data['id_mo']);
     tituloModalPermisoModulo.innerText = "Editanto permiso modulo";
     opcion_pm = 2;
-    
+
     let option_ = document.createElement("option");
     option_.text = data['nombre_p'];
     console.log(data['nombre_p']);
@@ -695,7 +711,7 @@ $(document).on('click', '.btnEditarPermisoModulo', function () {
     console.log(data['id_p']);
     console.log(option_);
     selectPermiso.appendChild(option_);
-    
+
     id_pm = data['id_pm'];
     $("#selectModulo_pm").val(data["id_mo"]);
     $("#selectPermiso_pm").val(data["id_p"]);
@@ -709,7 +725,7 @@ $(document).on('click', '.btnBorrarPermisoModulo', async function () {
     }
 
     id_pm = data["id_pm"];
-    
+
 
     const result = await Swal.fire({
         title: '¿ESTA SEGURO DE ELIMINAR ESTE PERMISO PARA EL MODULO?',
@@ -729,7 +745,7 @@ $(document).on('click', '.btnBorrarPermisoModulo', async function () {
                 type: "POST",
                 data: {
                     id_pm: id_pm,
-                    id_mo : data['id_mo']
+                    id_mo: data['id_mo']
                 },
                 success: function (resp, textStatus, jqXHR) {
                     if (resp === "OK") {
@@ -764,6 +780,7 @@ function llenarSelectPermisosDisponibles(id_mo) {
                 let option = document.createElement("option");
                 option.text = item.nombre;
                 option.value = item.id_p;
+                option.setAttribute("data-descripcion", item.descripcion);
                 selectPermiso.appendChild(option);
             }
         },
@@ -773,11 +790,23 @@ function llenarSelectPermisosDisponibles(id_mo) {
     });
 }
 
-selectModulo.addEventListener('change', function () {
-
+selectModulo.addEventListener('change', function (e) {
+    descripcionModuloLabel.innerText = selectModulo.options[selectModulo.selectedIndex].dataset.descripcion;
+    console.log(selectModulo.options[selectModulo.selectedIndex].dataset.descripcion);
     if (selectModulo.value !== "default") {
         // LLenamos el select de permisos
         llenarSelectPermisosDisponibles(selectModulo.value);
+    }else{
+        descripcionModuloLabel.innerText = "";
+    }
+});
+
+selectPermiso.addEventListener("change", function (e){
+    //console.log(selectPermiso.options[selectPermiso.selectedIndex].dataset.descripcion);
+    if (selectPermiso.value !== "default") {
+        descripcionPermisoLabel.innerText = selectPermiso.options[selectPermiso.selectedIndex].dataset.descripcion;
+    }else{
+        descripcionPermisoLabel.innerText = "";
     }
 });
 
@@ -790,7 +819,175 @@ function limpiarSelect(select, mensaje) {
 }
 
 
+/* Funciones para el modulo configuracion de pefil */
 
+selectConfigPerfil.addEventListener("change", () => {
+    $("#tablaPermisosPerfil tbody").children().remove();
+    permisosPerfil = [];
+    if (selectConfigPerfil.value !== "default") {
+        $.ajax({
+            "url": "select_permisos_perfil.do",
+            dataType: 'json',
+            data: {
+                id_pe: selectConfigPerfil.value
+            },
+            success: function (data, textStatus, jqXHR) {
+
+                for (let item of data.data) {
+                    $("#tablaPermisosPerfil").find("tbody").append(`
+                        <tr>    
+                            <td>${item.nombreModulo}</td>
+                            <td>${item.nombrePermiso}</td>
+                            <td class="text-center">
+                                <button data-id_pm="${item.id_pm}" data-id_mo="${item.id_mo}" type="button" class="btn btn-danger btn-sm btnEliminarPermiso">Eliminar</button>
+                            </td>
+                        </tr>
+                    `);  
+                    
+                     permisosPerfil.push({
+                        id_pm : item.id_pm,
+                        id_mo : item.id_mo
+                    });
+                   
+                }
+                console.log(permisosPerfil);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
+    }
+});
+
+selectConfigModulo.addEventListener("change", () => {
+    limpiarSelect(selectConfigPermiso, 'Selecciona un permiso');
+    if (selectConfigModulo.value !== "default") {
+        $.ajax({
+            "url": "select_permisos_modulo.do",
+            dataType: 'json',
+            data: {
+                id_mo: selectConfigModulo.value
+            },
+            success: function (data, textStatus, jqXHR) {
+               // console.log(data);
+
+                for (let item of data.data) {
+                    let option = document.createElement("option");
+                    option.text = item.nombre;
+                    option.value = item.id_pm;
+                    console.log(option);
+                    selectConfigPermiso.appendChild(option);
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
+    }
+});
+
+btnAddPermiso.addEventListener('click', function (){
+   if(selectConfigPerfil.value === "default"){
+        notificarError("Selecciona un perfil");
+   }else if(selectConfigModulo.value === "default"){
+        notificarError("Selecciona un modulo");
+   }else if(selectConfigPermiso.value === "default"){
+        notificarError("Selecciona un permiso");
+   }else{
+       let ban = agregarPermiso(selectConfigPermiso.value,selectConfigModulo.value);
+       if(ban){
+           $("#tablaPermisosPerfil").find("tbody").append(`
+            <tr>    
+                <td>${selectConfigModulo.options[selectConfigModulo.selectedIndex].text}</td>
+                <td>${selectConfigPermiso.options[selectConfigPermiso.selectedIndex].text}</td>
+                <td class="text-center">
+                    <button data-id_pm="${selectConfigPermiso.value}" data-id_mo="${selectConfigModulo.value}" type="button" class="btn btn-danger btn-sm btnEliminarPermiso">Eliminar</button>
+                </td>
+            </tr>
+        `); 
+       }
+       console.log(permisosPerfil);
+   }
+});
+
+formGuardarPermisos.addEventListener('submit', function (e){
+    e.preventDefault();
+    if(selectConfigPerfil.value === "default"){
+        notificarError("Selecciona un perfil");
+    }else{ 
+        let cadena = formarCadenaPermisos();
+        console.log(cadena);
+        $.ajax({
+            "url": "modificar_permisos_perfil.do",
+            type : "POST",
+            data : {
+              id_pe : selectConfigPerfil.value,
+              cadena_permisos : cadena
+            },
+            success: function (data, textStatus, jqXHR) {
+                if(data === "OK"){
+                    notificacionExitosa("Modificación de permisos exitosa");
+                }else{
+                    notificarError(data);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
+            }
+        });
+    }
+});
+
+$(document).on('click', '.btnEliminarPermiso', function (e){
+    eliminarPermiso(e.target.dataset.id_pm,e.target.dataset.id_mo);
+    e.target.parentNode.parentNode.remove();
+});
+
+function eliminarPermiso(id_pm, id_mo){
+    let pos = 0;
+    for(let item of permisosPerfil){
+        if(item !== undefined){
+            if( parseInt(item.id_pm) === parseInt(id_pm) &&  parseInt(item.id_mo) === parseInt(id_mo) ){
+                delete permisosPerfil[pos];
+            }
+        }   
+        pos++;
+    }
+    console.log(permisosPerfil);
+}
+
+function  agregarPermiso(id_pm, id_mo){
+    for(let item of permisosPerfil){
+        if(item !== undefined){
+            if( parseInt(item.id_pm) === parseInt(id_pm) &&  parseInt(item.id_mo) === parseInt(id_mo) ){
+                return false;
+            }
+        }   
+    }   
+    permisosPerfil.push({
+        id_pm : parseInt(id_pm),
+        id_mo : parseInt(id_mo)
+    });
+    return true;
+    
+}
+
+function formarCadenaPermisos(){
+    let cadena = "";
+    let ban = 0;
+    for(let item of permisosPerfil){
+        if(item !== undefined){
+            if(ban === 1){
+                cadena += "-";
+            }
+            cadena+= item.id_pm + ",";
+            cadena+= item.id_mo;
+            ban = 1;
+        }   
+    }
+    return cadena;
+}
 
 /* FUNCIONES PARA LA NOTIFICACIONES DE MENSAJES */
 
