@@ -467,7 +467,7 @@
                                 </div>
                                 
                                 <!-- SALIDA PARA LA DESCRIPCION DEL PERMISO -->
-                                <div class="input-group pt-3">
+                                <div class="pt-3">
                                     <label id="descripcionPermisoLabel" class=""></label>
                                 </div>
 
