@@ -25,6 +25,7 @@ CREATE TABLE `type_card` (
   `id_tc` int(11) NOT NULL AUTO_INCREMENT,
   `type` text COLLATE utf8mb4_spanish_ci NOT NULL,
   `descripcion` text COLLATE utf8mb4_spanish_ci NOT NULL,
+  icono text COLLATE utf8mb4_spanish_ci NOT NULL,
   PRIMARY KEY (`id_tc`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -859,8 +860,8 @@ BEGIN
 	     	SET _nextlen_dos = LENGTH(_next_dos);
 			SET _id_mo = TRIM(_next_dos);
 
-			SELECT MAX(id_dp) as id_dp INTO _id_dp FROM detalle_perfil WHERE id_mo = _id_mo 
-			and id_pe = _id_pe;
+			SELECT MAX(id_dp) as id_dp INTO _id_dp FROM detalle_perfil WHERE 
+			 id_pe = _id_pe;
 
 			IF _id_dp IS NULL THEN
 				SET _id_dp =  1;

@@ -36,11 +36,11 @@ public class TypeCard_controller {
     
     @RequestMapping(value = "edit_card.do", method = RequestMethod.POST)
     @ResponseBody
-    public String editar(@RequestParam() String id, @RequestParam() String tipo, @RequestParam() String desc){
+    public String editar(@RequestParam() String id, @RequestParam() String tipo, @RequestParam() String desc, @RequestParam() String icono){
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         TypeCard_model card = (TypeCard_model) ctx.getBean("TypeCard_model");
         String retorno = "OK";
-        if(!card.edit(id, tipo, desc)){
+        if(!card.edit(id, tipo, desc, icono)){
              retorno = "Error al intentar editar";
         }
         return retorno;
@@ -60,11 +60,11 @@ public class TypeCard_controller {
     
     @RequestMapping(value = "add_card.do", method = RequestMethod.POST)
     @ResponseBody
-    public String add(@RequestParam() String tipo, @RequestParam() String desc){
+    public String add(@RequestParam() String tipo, @RequestParam() String desc, @RequestParam() String icono){
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         TypeCard_model card = (TypeCard_model) ctx.getBean("TypeCard_model");
         String retorno = "OK";
-        if(!card.insert(tipo, desc)){
+        if(!card.insert(tipo, desc, icono)){
              retorno = "Error al intentar registrar";
         }
         return retorno;

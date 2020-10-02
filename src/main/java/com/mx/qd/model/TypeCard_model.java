@@ -23,15 +23,15 @@ public class TypeCard_model {
         return empRows;
     }
     
-    public boolean edit(String id, String tipo, String desc){
+    public boolean edit(String id, String tipo, String desc, String icono){
         
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         boolean flag = true;
         
         try{
             jdbcTemplate.update(
-                    "UPDATE type_card set type=?, descripcion=? WHERE id_tc = ? ",
-                    tipo, desc, id
+                    "UPDATE type_card set type=?, descripcion=?, icono = ? WHERE id_tc = ? ",
+                    tipo, desc, icono ,id
             );
         }catch(DataAccessException e){
             flag = false;
@@ -41,15 +41,15 @@ public class TypeCard_model {
         return flag;
     }
 
-    public boolean insert(String tipo, String desc){
+    public boolean insert(String tipo, String desc, String icono){
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
         boolean flag = true;
         
         try {
             
             jdbcTemplate.update(
-                    "INSERT INTO type_card (type, descripcion, status) values (?, ?, 1)",
-                    tipo, desc
+                    "INSERT INTO type_card (type, descripcion, status, icono) values (?, ?, 1, ?)",
+                    tipo, desc, icono
             );
             
         } catch (DataAccessException e) {
