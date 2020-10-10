@@ -92,6 +92,7 @@ CREATE TABLE control_uno(
 	id_tc int(11) NOT NULL,
 	FOREIGN KEY (id_tc) REFERENCES type_card(id_tc),
 	status int(11) NOT NULL,
+	icono text NOT NULL,
 	PRIMARY KEY(id_c)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 

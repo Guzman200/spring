@@ -53,14 +53,15 @@ public class ControlUno_controller {
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) String descripcion,
             @RequestParam(required = false) String id_p,
-            @RequestParam(required = false) String id_e
+            @RequestParam(required = false) String id_e,
+            @RequestParam(required = false) String icono
     ){
          
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         ControlUno_model control = (ControlUno_model) ctx.getBean("ControlUno_model");
         String retorno = "OK";
         
-            if(!control.insert(modulo, tarjeta, conexion, formato, pos_x, pos_y, altura, anchura, colorUno, colorDos, tipo, titulo, descripcion)){
+            if(!control.insert(modulo, tarjeta, conexion, formato, pos_x, pos_y, altura, anchura, colorUno, colorDos, tipo, titulo, descripcion,icono)){
                 retorno = "Error al insertar registro";
             }
         
@@ -85,13 +86,14 @@ public class ControlUno_controller {
             @RequestParam(required = false) String titulo,
             @RequestParam(required = false) String descripcion,
             @RequestParam(required = false) String id_p,
-            @RequestParam(required = false) String id_e
+            @RequestParam(required = false) String id_e,
+            @RequestParam(required = false) String icono
     ){
          
         ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         ControlUno_model control = (ControlUno_model) ctx.getBean("ControlUno_model");
         String retorno = "OK";
-        if(!control.update(modulo, tarjeta, conexion, formato, pos_x, pos_y, altura, anchura, colorUno, colorDos, tipo, titulo, descripcion, id_c, id_p, id_e)){
+        if(!control.update(modulo, tarjeta, conexion, formato, pos_x, pos_y, altura, anchura, colorUno, colorDos, tipo, titulo, descripcion, id_c, id_p, id_e,icono)){
             retorno = "Error al modificar";
         }
                 

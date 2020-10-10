@@ -21,7 +21,7 @@ DROP PROCEDURE IF EXISTS insertControlUno $$
 CREATE PROCEDURE insertControlUno(
 	IN id_m int, IN id_tc int, IN id_co int, IN id_f int,
 	IN pos_x text, IN pos_y text, IN altura int, IN anchura int, IN colorUno text,
-	IN colorDos text, IN tipo text, IN titulo text, IN descr text
+	IN colorDos text, IN tipo text, IN titulo text, IN descr text, IN icono text
 )
 
 BEGIN
@@ -30,8 +30,8 @@ BEGIN
 
 	select @idElemento := LAST_INSERT_ID();
 
-	INSERT INTO control_uno (tipo,altura,anchura,color1,color2,titulo,descripcion,id_f,id_tc,status) 
-	                 VALUES (tipo,altura,anchura,colorUno,colorDos,titulo,descr,id_f,id_tc,1);
+	INSERT INTO control_uno (tipo,altura,anchura,color1,color2,titulo,descripcion,id_f,id_tc,status,icono) 
+	                 VALUES (tipo,altura,anchura,colorUno,colorDos,titulo,descr,id_f,id_tc,1,icono);
 	INSERT INTO elemento_controlUno (id_e,id_c,id_co) VALUES (@idElemento,LAST_INSERT_ID(),id_co);
 END
 $$
@@ -47,7 +47,8 @@ CREATE PROCEDURE updateControlUno(
 	IN colorDos text, IN tipo_ text, IN titulo_ text, IN descr text,
 	IN id_c_ int, -- id conexion
 	IN id_p_ int, -- id posicion
-	IN id_e_ int -- id elemento
+	IN id_e_ int ,-- id elemento
+	IN icono_ text -- icono
 )
 
 BEGIN
@@ -57,7 +58,7 @@ BEGIN
 
 	UPDATE control_uno set tipo = tipo_ ,altura = altura_ ,anchura = anchura_,
 	                      color1 = colorUno,color2 = colorDos,titulo=titulo_,
-	                      descripcion = descr, id_f = id_f_ , id_tc = id_tc_ WHERE id_c = id_c_;
+	                      descripcion = descr, id_f = id_f_ , id_tc = id_tc_, icono = icono_ WHERE id_c = id_c_;
 
 	UPDATE elemento_controlUno set id_co = id_co_  WHERE id_c = id_c_ and id_e = id_e_;
 END

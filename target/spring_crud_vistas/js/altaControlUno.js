@@ -1,3 +1,5 @@
+import { iconosGLOBAL } from './return_iconos.js';
+
 const btnAddControl = document.getElementById('btnAddControl');
 const formAddControl = document.getElementById('formAddControl');
 var tablaControl;
@@ -6,6 +8,8 @@ var id_c; // id conexion
 var id_e; // id elemento 
 var id_p; // id posicion
 var mensaje;
+
+var divIconos = document.getElementById("sptm");
 
 /* Inicializamos la datatables */
 function init () {
@@ -41,10 +45,17 @@ function init () {
             { "data" : "url"},
             { "data" : "id_p",
               "visible" : false},
+            {"data" : function (icono){
+                     return `<span class="${icono.icono}"></span>`;
+            }},
             {"defaultContent": "<div class='text-center'><div class='btn-group'><button class='btn btn-info btn-sm btnEditar'>EDIT</button><button class='btn btn-danger btn-sm btnBorrar'>DELETE</button></div></div>"}
         ]
     });
+    
+   divIconos.innerHTML += iconosGLOBAL;
+     
 }
+
 
 function llenarSelects (){
     $.ajax({
@@ -135,6 +146,8 @@ btnAddControl.addEventListener('click', () => {
      $("#selectCard").val("default");
      $("#selectConexion").val("default");
      $("#selectFormato").val("default");
+     $("#input_icono").val("");
+     $("#i_icono").removeAttr('class');
 });
 
 $(document).on('click', '.btnEditar', function () {
@@ -162,6 +175,10 @@ $(document).on('click', '.btnEditar', function () {
     $("#selectCard").val(data['id_tc']);
     $("#selectConexion").val(data['id_co']);
     $("#selectFormato").val(data['id_f']);
+    $("#input_icono").val(data['icono']);
+    
+     $("#i_icono").removeAttr('class');
+     $("#i_icono").addClass(data['icono']);
     
     $("#modalAgregarControl").modal("show");
 });
@@ -249,7 +266,8 @@ formAddControl.addEventListener('submit', (e) => {
                 titulo : $("#titulo").val(),
                 descripcion : $("#descripcion").val(),
                 id_p : id_p,
-                id_e : id_e
+                id_e : id_e,
+                icono : $("#input_icono").val()
             },
             beforeSend : function(xhr) {
             },
@@ -291,6 +309,17 @@ function  validarSelects(){
     
     return true;
 }
+
+$(document).on('click', '.elegirIcono', function (e){
+    var span = e.target;
+    var clases = span.classList;
+    
+    let claseIcono = clases[0] + " " + clases[1];
+    $("#i_icono").removeAttr('class');
+    $("#i_icono").addClass(claseIcono);
+    $("#input_icono").val(claseIcono);
+    
+});
 
 
 function notificacionExitosa(mensaje){

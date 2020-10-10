@@ -270,7 +270,7 @@
 
 
         <script type="module" src="${pageContext.request.contextPath}/js/type_card.js"></script>
-        <script src="${pageContext.request.contextPath}/js/return_iconos.js"></script>
+        <script type="module" src="${pageContext.request.contextPath}/js/return_iconos.js"></script>
 
 
     </body>

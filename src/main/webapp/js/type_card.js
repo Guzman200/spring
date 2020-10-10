@@ -173,10 +173,9 @@ $(document).on('click', '#addTypeCard', () => {
 });
 
 function cargarIconos(){
-   
     divIconos.innerHTML += iconosGLOBAL;
     divIconosEdit.innerHTML += iconosGLOBAL;
-    console.log(divIconos);
+    //console.log(divIconos);
 } 
 
 cargarIconos();
@@ -193,7 +192,7 @@ $(document).on('click', '.elegirIcono', function (e){
     $("#icono").val(claseIcono);
     $("#iconoEdit").val(claseIcono);
     
-    console.log(claseIcono);
+   // console.log(claseIcono);
 });
     
 

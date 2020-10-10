@@ -81,9 +81,7 @@
                  <property name="dataSource" ref="dataSource"></property>
              </bean>
              
-             <bean id="Testing_model" class="com.mx.qd.model.Testing_model">
-                 <property name="dataSource" ref="dataSource"></property>
-             </bean>
+             
                                            	                     
 	<bean id="dataSource" class="${jdbc.dataSourceOracle}">  
                 <property name="driverClassName" value="${jdbc.driverClassNameOracle}" />  

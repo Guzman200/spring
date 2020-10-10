@@ -9,6 +9,9 @@
 
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/bootstrap/css/bootstrap.min.css">
+        
+        <!-- Fontawesome -->
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/fontawesome-free/css/all.min.css">
 
         <!-- DataTables .-->
         <link rel="stylesheet" href="${pageContext.request.contextPath}/plugins/datatables/datatables.min.css">
@@ -65,6 +68,7 @@
                                         <th>Tipo Tarjeta</th>
                                         <th>Conexión</th>
                                         <th>id_p</th>
+                                        <th>Icono</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -248,7 +252,7 @@
                             <div class="row">
 
                                 <div class="col-6">
-                                    
+
                                     <!-- ENTRADA PARA LA DESCRIPCION -->
                                     <div class="input-group pt-3">
                                         <div class="input-group-prepend">
@@ -293,33 +297,52 @@
 
 
                             <div class="row">
-                                 <div class="col-6">
-                                        <!-- ENTRADA PARA EL TIPO DE TARJETA -->
-                                        <div class="input-group pt-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fab fa-cuttlefish"></i>
-                                                </span>
-                                            </div>
-                                            <select class="form-control" name="tipoTarjeta" id="selectCard">
-                                                <option value="default" >Seleccione un tipo de tarjeta</option>
-                                            </select>
+                                <div class="col-6">
+                                    <!-- ENTRADA PARA EL TIPO DE TARJETA -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fab fa-cuttlefish"></i>
+                                            </span>
                                         </div>
-                                  </div>
+                                        <select class="form-control" name="tipoTarjeta" id="selectCard">
+                                            <option value="default" >Seleccione un tipo de tarjeta</option>
+                                        </select>
+                                    </div>
+                                </div>
 
-                                  <div class="col-6">
-                                        <!-- ENTRADA PARA EL TIPO DE FORMATO -->
-                                        <div class="input-group pt-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fab fa-cuttlefish"></i>
-                                                </span>
-                                            </div>
-                                            <select class="form-control" name="tipoConexion" id="selectFormato">
-                                                <option value="default" >Seleccione un tipo de formato</option> 
-                                            </select>
+                                <div class="col-6">
+                                    <!-- ENTRADA PARA EL TIPO DE FORMATO -->
+                                    <div class="input-group pt-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="fab fa-cuttlefish"></i>
+                                            </span>
                                         </div>
-                                 </div>
+                                        <select class="form-control" name="tipoConexion" id="selectFormato">
+                                            <option value="default" >Seleccione un tipo de formato</option> 
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ENTRADA PARA EL TIPO DE ICONO -->
+                            <div class="input-group pt-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="" id="i_icono"></i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" id="input_icono"
+                                       placeholder="Icono seleccionado" required>
+                            </div>
+
+                            <div class="row pt-4">
+                                <div class="col-12">
+                                    <div style="overflow: scroll; height: 200px" id="sptm">
+                                        
+                                    </div>
+                                </div>
                             </div>
 
                         </div>
@@ -355,7 +378,8 @@
         <script src="${pageContext.request.contextPath}/plugins/datatables/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
 
-        <script src="${pageContext.request.contextPath}/js/altaControlUno.js"></script>
+        <script type="module" src="${pageContext.request.contextPath}/js/return_iconos.js"></script>
+        <script type="module" src="${pageContext.request.contextPath}/js/altaControlUno.js"></script>
 
 
     </body>

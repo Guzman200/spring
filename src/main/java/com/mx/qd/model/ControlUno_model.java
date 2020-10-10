@@ -16,7 +16,7 @@ public class ControlUno_model {
         String query = "SELECT c1.id_c, c1.id_tc, m.id_m,c1.id_f, ec1.id_e, ec1.id_co,\n" +
                             "	   m.nombre as modulo, c1.tipo, c1.altura, c1.anchura, c1.color1, c1.color2, c1.titulo, c1.descripcion,\n" +
                             "       p.posicionx, p.posiciony, f.nombre as formato, tc.type as tc, c.url,\n" +
-                            "       p.id_p\n" +
+                            "       p.id_p, c1.icono\n" +
                             "FROM modulo m, elemento_controlUno ec1, elemento e, control_uno c1, posicion p, formato f, type_card tc, \n" +
                             "    conexion c\n" +
                             "WHERE ec1.id_c = c1.id_c and ec1.id_e = e.id_e and e.id_m = m.id_m and -- enlazo con el modulo\n" +
@@ -32,7 +32,8 @@ public class ControlUno_model {
     }
      
     public boolean insert(String modulo, String tarjeta, String conexion, String formato, String pos_x, String pos_y,
-            String altura, String anchura, String colorUno, String colorDos, String tipo, String titulo, String descripcion
+            String altura, String anchura, String colorUno, String colorDos, String tipo, String titulo, String descripcion,
+            String icono
     ){
      
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -41,8 +42,8 @@ public class ControlUno_model {
         try
         {
             num_afectados=jdbcTemplate.update(
-                        "CALL insertControlUno(?,?,?,?,?,?,?,?,?,?,?,?,?)",
-                        modulo,tarjeta,conexion,formato,pos_x,pos_y,altura,anchura,colorUno,colorDos,tipo,titulo,descripcion
+                        "CALL insertControlUno(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                        modulo,tarjeta,conexion,formato,pos_x,pos_y,altura,anchura,colorUno,colorDos,tipo,titulo,descripcion,icono
             );
             System.out.println("Numero de filas afectadas = " +num_afectados);
         }catch (DataAccessException e)
@@ -58,7 +59,7 @@ public class ControlUno_model {
     
     public boolean update(String modulo, String tarjeta, String conexion, String formato, String pos_x, String pos_y,
             String altura, String anchura, String colorUno, String colorDos, String tipo, String titulo, String descripcion,
-            String id_c, String id_p, String id_e
+            String id_c, String id_p, String id_e, String icono
     ){
      
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -67,9 +68,9 @@ public class ControlUno_model {
         try
         {
             num_afectados=jdbcTemplate.update(
-                        "CALL updateControlUno(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                        "CALL updateControlUno(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                         modulo,tarjeta,conexion,formato,pos_x,pos_y,altura,anchura,colorUno,colorDos,tipo,titulo,descripcion,
-                        id_c,id_p,id_e
+                        id_c,id_p,id_e, icono
             );
             System.out.println("Numero de filas afectadas = " +num_afectados);
         }catch (DataAccessException e)
